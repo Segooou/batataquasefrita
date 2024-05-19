@@ -20,7 +20,6 @@ export const LoginForm: FC = () => {
         label={'E-mail'}
         placeholder={'Digite seu e-mail'}
         register={register('email')}
-        type={'email'}
       />
 
       <LabelInput

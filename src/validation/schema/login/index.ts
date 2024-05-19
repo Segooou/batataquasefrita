@@ -3,7 +3,7 @@ import type { InferType } from 'yup';
 
 // Login
 export const loginSchema = object().shape({
-  email: string().email().required(),
+  email: string().required(),
   password: string().required()
 });
 

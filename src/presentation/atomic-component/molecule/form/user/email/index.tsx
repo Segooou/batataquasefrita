@@ -26,6 +26,8 @@ export const SendEmailForm: FC = () => {
 
   return (
     <div className={'flex flex-col gap-8 max-w-[450px] w-full laptop:min-w-[450px] mx-auto'}>
+      <div className={'text-white font-bold text-2xl'}>Puxar Link Stake</div>
+
       <form className={'flex flex-col gap-4'} onSubmit={handleSubmit(onSubmit)}>
         <LabelInput
           error={!!errors.email}
