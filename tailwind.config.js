@@ -12,7 +12,7 @@ export default {
     plugin(({ addBase }) => {
       addBase({
         '*': {
-          scrollbarColor: '#00000063 transparent',
+          scrollbarColor: '#444444 transparent',
           scrollbarWidth: 'thin'
         },
         '*::-webkit-scrollbar': {
@@ -20,7 +20,7 @@ export default {
           width: '6px'
         },
         '*::-webkit-scrollbar-thumb': {
-          backgroundColor: '#00000063',
+          backgroundColor: '#444444',
           borderRadius: '10px'
         },
         '*::-webkit-scrollbar-track-piece': {

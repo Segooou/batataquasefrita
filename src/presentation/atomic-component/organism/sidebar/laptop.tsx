@@ -16,7 +16,7 @@ export const LaptopSidebar: FC<LaptopSidebarProps> = ({ headerIsBig }) => {
 
   return (
     <div
-      className={`flex flex-col bg-gray-800 justify-between gap-3 h-max fixed border-r-2 border-gray-700 py-4 transition-[width] ease-in-out delay-200 ${
+      className={`flex flex-col bg-gray-800 justify-between gap-3 h-max border-r-2 border-gray-700 py-4 transition-[width] ease-in-out  ${
         open ? 'w-[280px]' : 'w-[65px]'
       } ${headerIsBig ? 'min-h-[calc(100dvh-94px)]' : 'min-h-[calc(100dvh-65px)]'}`}
       ref={containerRef}
@@ -45,7 +45,7 @@ export const LaptopSidebar: FC<LaptopSidebarProps> = ({ headerIsBig }) => {
                 />
 
                 <span
-                  className={`h-[1.5rem] font-semibold transition-[width] ease-in-out delay-200 overflow-hidden cursor-pointer ${
+                  className={`h-[1.5rem] font-semibold transition-[width] ease-in-out overflow-hidden cursor-pointer ${
                     open ? 'w-[200px]' : 'w-[0px]'
                   } ${sidebarItem.link === firstPathname ? 'text-white' : 'text-white'}`}
                 >

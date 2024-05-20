@@ -27,18 +27,21 @@ export const MainTemplate: FC = () => {
   }, [headerIsBig]);
 
   return (
-    <div className={'flex flex-col w-full h-full min-h-dvh bg-black'} id={'main'}>
+    <div className={'flex flex-col max-w-[100dvw] h-full min-h-dvh bg-black'} id={'main'}>
       <Header headerIsBig={headerIsBig} />
 
       <main
-        className={'flex h-full gap-8'}
+        className={'flex max-w-[100vw]'}
         style={{
           marginTop: headerIsBig ? '94px' : '65px',
           transition: 'all 200ms'
         }}
       >
         <Sidebar headerIsBig={headerIsBig} />
-        <Outlet />
+
+        <div className={'flex flex-col overflow-auto w-full h-full text-white p-8'}>
+          <Outlet />
+        </div>
       </main>
     </div>
   );

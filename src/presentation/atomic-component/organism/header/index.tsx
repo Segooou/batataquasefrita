@@ -15,11 +15,11 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
-  const [showUser, setShowUser] = useState(true);
+  const [showUser, setShowUser] = useState(false);
   const { pathname } = useLocation();
 
   useEffect((): void => {
-    if (showUser) setShowUser(true);
+    if (showUser) setShowUser(false);
   }, [pathname]);
 
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
       }
       style={{
         height: headerIsBig ? '94px' : '65px',
-        transition: 'all  200ms'
+        transition: 'all 200ms'
       }}
     >
       <div className={'flex w-full items-center gap-4 justify-start'}>

@@ -20,3 +20,4 @@ export * from './success-div';
 export * from './date-input';
 export * from './card';
 export * from './highlighted-text';
+export * from './draggable-container';

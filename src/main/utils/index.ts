@@ -9,3 +9,4 @@ export * from './convert-list';
 export * from './submit-form';
 export * from './call-toast';
 export * from './scroll-top';
+export * from './random';
