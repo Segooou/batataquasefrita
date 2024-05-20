@@ -29,6 +29,10 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
         },
         styleOverrides: {
           root: {
+            ':hover': {
+              backgroundColor: '#555555'
+            },
+            backgroundColor: colors.gray[700],
             color: 'white',
             padding: '8px 32px',
             textTransform: 'capitalize'
@@ -183,25 +187,45 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
       MuiTextField: {
         defaultProps: {
           style: {
-            backgroundColor: '#FAFAFA',
-            borderRadius: 10
+            backgroundColor: colors.gray[700],
+            borderColor: 'white',
+            borderRadius: 8,
+            color: 'white !important'
           }
         },
         styleOverrides: {
           root: {
             '& input': {
+              color: 'white',
               padding: '15px 24px'
             },
             '& input:-webkit-autofill': {
               '-webkit-box-shadow': '0 0 0 1000px transparent inset !important',
+              color: 'white',
               transition: 'background-color 10000s ease-in-out'
             },
-            '.MuiFormLabel-root': {
-              backgroundColor: 'white',
-              padding: '0px 4px'
+            '.Mui-error': {
+              '.MuiFormLabel-root': {
+                color: 'red !important'
+              },
+              '.MuiOutlinedInput-notchedOutline': {
+                borderColor: `${colors.red} !important`
+              },
+              svg: {
+                color: 'red'
+              }
             },
-            '.MuiInputBase-input': {
-              padding: '14px'
+            '.MuiFormLabel-root,.MuiFormLabel-root.Mui-focused': {
+              color: 'white'
+            },
+            '.MuiOutlinedInput-notchedOutline': {
+              borderColor: `${colors.gray[200]} !important`
+            },
+            'MuiInputLabel-root.Mui-error,.MuiFormLabel-root.Mui-focused.Mui-error': {
+              color: 'red !important'
+            },
+            svg: {
+              color: 'white'
             }
           }
         },

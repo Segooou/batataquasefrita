@@ -2,6 +2,8 @@
 export enum routePaths {
   login = '/',
   home = '/home',
+  profile = '/perfil',
+  stake = '/stake',
   recoverPassword = '/recuperar-senha',
   register = '/cadastro'
 }
@@ -9,6 +11,8 @@ export enum routePaths {
 export const paths = {
   login: '/',
   home: '/home',
+  profile: '/perfil',
+  stake: '/stake',
   recoverPassword: '/recuperar-senha',
   register: '/cadastro'
 };

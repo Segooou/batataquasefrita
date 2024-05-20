@@ -1,6 +1,6 @@
 import { api } from 'infra/http';
 import { apiPaths, paths } from 'main/config';
-import { callToast } from 'main/utils';
+import { callToast, resolverError } from 'main/utils';
 import { getRedirectPath } from 'store/redirect/selector';
 import { loginSchema } from 'validation/schema';
 import { setAuth } from 'store/persist/slice';
@@ -68,7 +68,8 @@ export const useLogin = (): {
 
       dispatch(setRedirect({ path: null }));
       navigate(path === null || path === '/' ? paths.home : path);
-    } catch {
+    } catch (error) {
+      resolverError(error);
       setErrorMessage('Usuário ou senha incorreto(s), verifique seus dados.');
     }
   };

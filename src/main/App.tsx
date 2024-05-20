@@ -33,7 +33,7 @@ const App: FC = () => {
         style={{
           padding: '12px'
         }}
-        theme={'light'}
+        theme={'dark'}
       />
     </QueryClientProvider>
   );

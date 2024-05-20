@@ -8,7 +8,7 @@ import type { InputBaseComponentProps, TextFieldProps } from '@mui/material';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface LabelInputProps
-  extends Pick<TextFieldProps, 'InputProps' | 'onKeyDown' | 'size' | 'sx'> {
+  extends Pick<TextFieldProps, 'autoCapitalize' | 'InputProps' | 'onKeyDown' | 'size' | 'sx'> {
   id?: string;
   register?: UseFormRegisterReturn;
   value?: string;
@@ -66,6 +66,7 @@ export const LabelInput: FC<LabelInputProps> = ({
     ) : undefined;
 
     const inputProps: InputBaseComponentProps = {
+      autoCapitalize: props.autoCapitalize,
       style: {
         padding: '14px',
         textTransform: props.uppercase ? 'uppercase' : 'none'

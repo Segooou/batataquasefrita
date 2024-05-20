@@ -1,5 +1,5 @@
 import { type FC, useEffect, useState } from 'react';
-import { Header } from 'presentation/atomic-component/organism';
+import { Header, Sidebar } from 'presentation/atomic-component/organism';
 import { Outlet, useLocation } from 'react-router-dom';
 
 export const MainTemplate: FC = () => {
@@ -26,38 +26,18 @@ export const MainTemplate: FC = () => {
     };
   }, [headerIsBig]);
 
-  // const dispatch = useDispatch();
-
   return (
-    <div className={'flex flex-col w-full h-full min-h-dvh bg-gray-900'} id={'main'}>
+    <div className={'flex flex-col w-full h-full min-h-dvh bg-black'} id={'main'}>
       <Header headerIsBig={headerIsBig} />
 
-      {/* <div className={'flex flex-col items-end p-4'}>
-        <Link className={'bg-gray-700 text-white rounded-md'} to={paths.login}>
-          <ListItemButton
-            className={'border-t-2 gap-2'}
-            onClick={(): void => {
-              dispatch(logout());
-            }}
-          >
-            <Logout
-              sx={{
-                fontSize: '16px'
-              }}
-            />
-            Sair
-          </ListItemButton>
-        </Link>
-      </div> */}
-
       <main
-        className={'flex flex-col p-2 h-full'}
+        className={'flex h-full gap-8'}
         style={{
-          marginBottom: '46px',
-          marginTop: headerIsBig ? '94px' : '80px',
+          marginTop: headerIsBig ? '94px' : '65px',
           transition: 'all 200ms'
         }}
       >
+        <Sidebar headerIsBig={headerIsBig} />
         <Outlet />
       </main>
     </div>

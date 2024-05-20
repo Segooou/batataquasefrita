@@ -2,6 +2,7 @@ import { Collapse, IconButton, List, ListItemButton } from '@mui/material';
 import { ExpandMore, Logout } from '@mui/icons-material';
 import { type FC, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { ToggleMenu } from 'presentation/atomic-component/atom';
 import { colors } from 'presentation/style';
 import { getUser } from 'store/persist/selector';
 import { logout } from 'store/persist/slice';
@@ -14,11 +15,11 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
-  const [showUser, setShowUser] = useState(false);
+  const [showUser, setShowUser] = useState(true);
   const { pathname } = useLocation();
 
   useEffect((): void => {
-    if (showUser) setShowUser(false);
+    if (showUser) setShowUser(true);
   }, [pathname]);
 
   const dispatch = useDispatch();
@@ -27,14 +28,18 @@ export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
   return (
     <header
       className={
-        'text-white fixed top-0 z-20 bg-gray-800 flex justify-between px-8 pt-4 shadow-[0px_0px_3px_2px_#0000001d] w-screen'
+        'flex fixed top-0 z-20 bg-gray-800 border-b border-gray-700 items-center justify-between px-2 w-screen'
       }
       style={{
-        height: headerIsBig ? '94px' : '80px',
+        height: headerIsBig ? '94px' : '65px',
         transition: 'all  200ms'
       }}
     >
-      <div>
+      <div className={'flex w-full items-center gap-4 justify-start'}>
+        <ToggleMenu />
+      </div>
+
+      <div className={'w-full flex flex-col items-center'}>
         <Link to={paths.home}>
           <img
             alt={'logo'}
@@ -54,64 +59,67 @@ export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
         </Link>
       </div>
 
-      <Collapse
-        className={'bg-gray-800 max-w-[235px]'}
-        collapsedSize={'48px'}
-        in={showUser}
-        sx={{
-          marginTop: headerIsBig ? '8px' : '0',
-          transition: 'all  150ms'
-        }}
-      >
-        <div
-          className={'flex flex-col'}
-          style={{
-            gap: headerIsBig ? '22px' : '16px',
+      <div className={'bg-primary w-full relative'}>
+        <Collapse
+          className={'bg-gray-800 absolute top-0 right-0'}
+          collapsedSize={'48px'}
+          in={showUser}
+          sx={{
+            maxWidth: '235px',
+            minWidth: showUser ? '235px' : undefined,
+            top: headerIsBig ? '-23.5px' : '-24.5px',
             transition: 'all  150ms'
           }}
         >
           <div
-            className={
-              'flex bg-gray-800 justify-between gap-2 items-center ml-auto h-[48px] rounded-3xl'
-            }
-          >
-            <Avatar>{user?.email.slice(0, 1).toUpperCase()}</Avatar>
-
-            <div
-              className={'flex flex-col gap-1'}
-              style={{
-                opacity: showUser ? 'initial' : '0',
-                transition: 'all  200ms',
-                width: showUser ? '125px' : '0px'
-              }}
-            >
-              <span className={'font-semibold text-xs'}>{user?.email}</span>
-            </div>
-
-            <IconButton
-              className={'text-white'}
-              onClick={(): void => {
-                setShowUser(!showUser);
-              }}
-            >
-              <ExpandMore
-                color={'inherit'}
-                sx={{
-                  color: 'white',
-                  rotate: showUser ? '180deg' : '0deg',
-                  transition: 'all  200ms'
-                }}
-              />
-            </IconButton>
-          </div>
-
-          <List
-            className={'flex bg-gray-800 flex-col gap-1 border-2 border-t-0 text-sm text-gray-700'}
-            sx={{
-              padding: '4px 0px'
+            className={'flex flex-col'}
+            style={{
+              gap: headerIsBig ? '22px' : '8.5px',
+              transition: 'all  150ms'
             }}
           >
-            {/* <ListItemButton
+            <div
+              className={
+                'flex bg-gray-800 text-white justify-between gap-2 items-center ml-auto h-[48px] rounded-3xl'
+              }
+            >
+              <Avatar>{user?.email.slice(0, 1).toUpperCase()}</Avatar>
+
+              <div
+                className={'flex flex-col gap-1'}
+                style={{
+                  opacity: showUser ? 'initial' : '0',
+                  transition: 'all  200ms',
+                  width: showUser ? '125px' : '0px'
+                }}
+              >
+                <span className={'font-semibold text-xs truncate'}>{user?.email}</span>
+              </div>
+
+              <IconButton
+                className={'text-white'}
+                onClick={(): void => {
+                  setShowUser(!showUser);
+                }}
+              >
+                <ExpandMore
+                  color={'inherit'}
+                  sx={{
+                    color: 'white',
+                    rotate: showUser ? '180deg' : '0deg',
+                    transition: 'all  200ms'
+                  }}
+                />
+              </IconButton>
+            </div>
+
+            <List
+              className={'flex bg-gray-800 flex-col gap-1 border-2 border-t-0 text-sm'}
+              sx={{
+                padding: '4px 0px'
+              }}
+            >
+              {/* <ListItemButton
               className={'gap-2'}
               sx={{
                 fontSize: '14px'
@@ -186,26 +194,27 @@ export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
               }}
             /> */}
 
-            <Link to={paths.login}>
-              <ListItemButton
-                className={'text-white border-t-2 gap-2'}
-                onClick={(): void => {
-                  dispatch(logout());
-                }}
-                sx={{ color: 'white' }}
-              >
-                <Logout
-                  sx={{
-                    color: colors.white,
-                    fontSize: '16px'
+              <Link to={paths.login}>
+                <ListItemButton
+                  className={'gap-2'}
+                  onClick={(): void => {
+                    dispatch(logout());
                   }}
-                />
-                Sair
-              </ListItemButton>
-            </Link>
-          </List>
-        </div>
-      </Collapse>
+                  sx={{ color: 'white' }}
+                >
+                  <Logout
+                    sx={{
+                      color: colors.white,
+                      fontSize: '16px'
+                    }}
+                  />
+                  Sair
+                </ListItemButton>
+              </Link>
+            </List>
+          </div>
+        </Collapse>
+      </div>
     </header>
   );
 };

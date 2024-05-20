@@ -10,7 +10,7 @@ export const ToggleMenu: FC = () => {
   const sidebar = useSidebar();
 
   return (
-    <div className={'border rounded-md bg-gray-150'}>
+    <div className={'border rounded-md bg-gray-700 text-white'}>
       <ListItemButton
         onClick={(): void => {
           dispatch(setSidebar(!sidebar));

@@ -9,7 +9,7 @@ export const AuthTemplate: FC = () => {
   }, [pathname]);
 
   return (
-    <main className={'flex flex-col justify-center min-h-dvh w-full bg-gray-900'}>
+    <main className={'flex flex-col justify-center min-h-dvh w-full bg-black'}>
       <Outlet />
     </main>
   );
