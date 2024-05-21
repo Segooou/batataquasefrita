@@ -75,7 +75,7 @@ export const DraggableContainer: FC<DraggableContainerProps> = ({ children, heig
   return (
     <div
       className={
-        'w-full overflow-x-auto overflow-y-hidden cursor-grab active:cursor-grabbing flex items-center gap-3'
+        'w-full overflow-x-auto overflow-y-hidden bg-gray-800 px-4 cursor-grab active:cursor-grabbing flex items-center gap-3'
       }
       onMouseDown={handleMouseDown}
       onMouseLeave={handleMouseLeave}

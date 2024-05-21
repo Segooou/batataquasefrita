@@ -83,7 +83,7 @@ export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
                 'flex bg-gray-800 text-white justify-between gap-2 items-center ml-auto h-[48px] rounded-3xl'
               }
             >
-              <Avatar>{user?.email.slice(0, 1).toUpperCase()}</Avatar>
+              <Avatar>{user?.username.slice(0, 1).toUpperCase()}</Avatar>
 
               <div
                 className={'flex flex-col gap-1'}
@@ -93,7 +93,7 @@ export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
                   width: showUser ? '125px' : '0px'
                 }}
               >
-                <span className={'font-semibold text-xs truncate'}>{user?.email}</span>
+                <span className={'font-semibold text-xs truncate'}>{user?.username}</span>
               </div>
 
               <IconButton

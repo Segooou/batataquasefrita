@@ -1,7 +1,12 @@
+export enum Role {
+  common = 'common',
+  admin = 'admin'
+}
+
 export interface UserProps {
   id: string;
-  name: string;
-  email: string;
+  username: string;
+  role: string;
 }
 
 export interface LoginResponse {
