@@ -8,7 +8,17 @@ import type { InputBaseComponentProps, TextFieldProps } from '@mui/material';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface LabelInputProps
-  extends Pick<TextFieldProps, 'autoCapitalize' | 'InputProps' | 'onKeyDown' | 'size' | 'sx'> {
+  extends Pick<
+    TextFieldProps,
+    | 'autoCapitalize'
+    | 'InputProps'
+    | 'inputRef'
+    | 'maxRows'
+    | 'minRows'
+    | 'onKeyDown'
+    | 'size'
+    | 'sx'
+  > {
   id?: string;
   register?: UseFormRegisterReturn;
   value?: string;
@@ -20,6 +30,7 @@ export interface LabelInputProps
   label?: string;
   labelTop?: string;
   autoComplete?: string;
+  textarea?: boolean;
   mask?: string;
   placeholder?: string;
   disabled?: boolean;
@@ -98,6 +109,7 @@ export const LabelInput: FC<LabelInputProps> = ({
         error={props.error}
         inputProps={inputProps}
         label={labelElement}
+        multiline={props.textarea}
         onBlur={props.onFocusOut}
         onChange={props.onChange ? props.onChange : register?.onChange}
         onFocus={props.onFocus}

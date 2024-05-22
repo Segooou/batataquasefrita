@@ -1,10 +1,12 @@
 import { useState } from 'react';
 
-export const useModal = (): {
+export interface useModalProps {
   isOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
-} => {
+}
+
+export const useModal = (): useModalProps => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = (): void => {

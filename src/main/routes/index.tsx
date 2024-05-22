@@ -1,4 +1,10 @@
-import { AuthContent, HomeContent, StackContent } from 'presentation/environment';
+import {
+  AuthContent,
+  FunctionalityContent,
+  HomeContent,
+  PlatformContent,
+  ProfileContent
+} from 'presentation/environment';
 import { AuthTemplate, MainTemplate } from 'presentation/atomic-component/template';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
 import { LoginRoute, PrivateRoute } from 'main/proxies';
@@ -21,7 +27,9 @@ const RouterConfig: FC = () => (
         <Route element={<PrivateRoute />}>
           <Route element={<MainTemplate />}>
             <Route element={<HomeContent />} path={routePaths.home} />
-            <Route element={<StackContent />} path={routePaths.stake} />
+            <Route element={<ProfileContent />} path={routePaths.profile} />
+            <Route element={<PlatformContent />} path={routePaths.platform} />
+            <Route element={<FunctionalityContent />} path={routePaths.functionality} />
           </Route>
         </Route>
 

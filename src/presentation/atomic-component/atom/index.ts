@@ -21,3 +21,5 @@ export * from './date-input';
 export * from './card';
 export * from './highlighted-text';
 export * from './draggable-container';
+export * from './icon-render';
+export * from './input-to-copy';

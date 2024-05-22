@@ -9,7 +9,7 @@ export interface useFindQueryProps {
   limit?: number;
   params?: object;
   apiRoute?: string;
-  id?: string;
+  id?: number | string;
 }
 
 interface queryProps extends useFindQueryProps {

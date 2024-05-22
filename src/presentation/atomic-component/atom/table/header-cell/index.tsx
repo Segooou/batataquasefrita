@@ -1,4 +1,5 @@
 import { TableCell } from '@mui/material';
+import { colors } from 'presentation/style';
 import type { FC, ReactNode } from 'react';
 import type { TableCellProps } from '@mui/material';
 
@@ -26,8 +27,9 @@ export const HeaderCell: FC<HeaderCellProps> = ({
     align={align ?? 'left'}
     className={className}
     sx={{
-      backgroundColor,
+      backgroundColor: backgroundColor ?? colors.gray[900],
       border: '0',
+      color: 'white',
       fontWeight: '600',
       maxWidth,
       minWidth,

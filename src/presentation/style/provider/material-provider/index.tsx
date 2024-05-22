@@ -23,6 +23,27 @@ interface Children {
 export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
   const LightTheme = createTheme({
     components: {
+      MuiAutocomplete: {
+        styleOverrides: {
+          popper: {
+            '& .MuiAutocomplete-option': {
+              '&:hover': {
+                backgroundColor: colors.gray[550]
+              },
+              '&[aria-selected="true"]': {
+                backgroundColor: colors.gray[700]
+              },
+              color: 'white',
+              lineHeight: '2rem'
+            },
+            '& .MuiAutocomplete-paper': {
+              backgroundColor: colors.gray[900]
+            },
+            backgroundColor: colors.gray[900]
+          }
+        }
+      },
+
       MuiButton: {
         defaultProps: {
           variant: 'contained'
@@ -103,7 +124,6 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
           }
         ]
       },
-
       MuiChip: {
         defaultProps: {
           variant: 'filled'
@@ -131,6 +151,35 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
         styleOverrides: {
           root: {
             textTransform: 'capitalize'
+          }
+        }
+      },
+      MuiPagination: {
+        styleOverrides: {
+          root: {
+            '& .MuiPaginationItem-root': {
+              '& .MuiPaginationItem-icon': {
+                color: 'white'
+              },
+              '&.Mui-selected': {
+                '&:hover': {
+                  backgroundColor: colors.gray[900]
+                },
+                backgroundColor: colors.gray[800],
+                color: 'white'
+              },
+              '&.MuiPaginationItem-previousNext': {
+                '&.Mui-disabled': {
+                  backgroundColor: colors.gray[800],
+                  color: colors.gray[500]
+                }
+              },
+              '&:hover': {
+                backgroundColor: colors.gray[550]
+              },
+              backgroundColor: colors.gray[700],
+              color: 'white'
+            }
           }
         }
       },
@@ -201,8 +250,37 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
             },
             '& input:-webkit-autofill': {
               '-webkit-box-shadow': '0 0 0 1000px transparent inset !important',
+              '-webkit-text-fill-color': 'white !important',
               color: 'white',
               transition: 'background-color 10000s ease-in-out'
+            },
+            '& input:-webkit-autofill:active': {
+              '-webkit-text-fill-color': 'white !important'
+            },
+            '& input:-webkit-autofill:focus': {
+              '-webkit-text-fill-color': 'white !important'
+            },
+            '& input:-webkit-autofill:hover': {
+              '-webkit-text-fill-color': 'white !important'
+            },
+            '& textarea': {
+              color: 'white',
+              padding: '0px !important'
+            },
+            '& textarea:-webkit-autofill': {
+              '-webkit-box-shadow': '0 0 0 1000px transparent inset !important',
+              '-webkit-text-fill-color': 'white !important',
+              color: 'white',
+              transition: 'background-color 10000s ease-in-out'
+            },
+            '& textarea:-webkit-autofill:active': {
+              '-webkit-text-fill-color': 'white !important'
+            },
+            '& textarea:-webkit-autofill:focus': {
+              '-webkit-text-fill-color': 'white !important'
+            },
+            '& textarea:-webkit-autofill:hover': {
+              '-webkit-text-fill-color': 'white !important'
             },
             '.Mui-error': {
               '.MuiFormLabel-root': {
@@ -217,6 +295,9 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
             },
             '.MuiFormLabel-root,.MuiFormLabel-root.Mui-focused': {
               color: 'white'
+            },
+            '.MuiFormLabel-root.Mui-error': {
+              color: 'red'
             },
             '.MuiOutlinedInput-notchedOutline': {
               borderColor: `${colors.gray[200]} !important`

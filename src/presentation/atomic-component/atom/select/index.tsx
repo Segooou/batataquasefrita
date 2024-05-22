@@ -133,7 +133,8 @@ export const Select: FC<SelectProps> = ({ isMultiple, options, register, value, 
           <li
             {...renderProps}
             style={{
-              backgroundColor: state.selected ? `${colors.primary}45` : '',
+              backgroundColor: state.selected ? colors.gray[700] : '',
+              color: 'white',
               lineHeight: '2rem'
             }}
           >

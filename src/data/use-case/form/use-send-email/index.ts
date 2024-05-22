@@ -49,7 +49,7 @@ export const useSendEmail = ({
 
       const response = await api.post<string[]>({
         body: data,
-        route: apiPaths.sendEmail
+        route: apiPaths.email
       });
 
       if (response?.length > 0) setValueI(response[0]);

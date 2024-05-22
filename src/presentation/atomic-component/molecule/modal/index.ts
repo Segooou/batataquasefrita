@@ -1,1 +1,2 @@
-export * from './keyword';
+export * from './new-functionality';
+export * from './show-new-functionality';

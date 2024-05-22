@@ -1,3 +1,5 @@
 export * from './auth';
 export * from './home';
-export * from './stack';
+export * from './platform';
+export * from './functionality';
+export * from './profile';

@@ -20,6 +20,7 @@ export const usePath = (): {
     window.location.href.split('/')[
       window.location.href.split('/').length - defaultValues.lastNumber
     ];
+
   const lastPathname = lastPath.replace(`?${queryParams.toString()}`, '').replace(/#.+/gu, '');
 
   const allPathname = window.location.href

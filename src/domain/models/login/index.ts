@@ -4,9 +4,10 @@ export enum Role {
 }
 
 export interface UserProps {
-  id: string;
+  id: number;
   username: string;
   role: string;
+  avatar: string | null;
 }
 
 export interface LoginResponse {

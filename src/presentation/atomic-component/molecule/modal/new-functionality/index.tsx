@@ -1,14 +1,16 @@
 import { Add, Edit } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 import { Modal } from 'presentation/atomic-component/atom/modal';
+import { NewFunctionalityForm } from 'presentation/atomic-component/molecule/form';
 import { useModal } from 'data/hooks';
 import type { FC } from 'react';
+import type { NewFunctionality } from 'domain/models';
 
-interface KeywordModalProps {
-  keyword?: { is: string };
+interface NewFunctionalityModalProps {
+  newFunctionality?: NewFunctionality;
 }
 
-export const KeywordModal: FC<KeywordModalProps> = ({ keyword }) => {
+export const NewFunctionalityModal: FC<NewFunctionalityModalProps> = ({ newFunctionality }) => {
   const { closeModal, isOpen, openModal } = useModal();
 
   return (
@@ -17,7 +19,7 @@ export const KeywordModal: FC<KeywordModalProps> = ({ keyword }) => {
       isOpen={isOpen}
       openModal={openModal}
       openModalElement={
-        keyword ? (
+        newFunctionality ? (
           <IconButton
             onClick={openModal}
             sx={{
@@ -34,19 +36,19 @@ export const KeywordModal: FC<KeywordModalProps> = ({ keyword }) => {
           </IconButton>
         ) : (
           <Button
-            className={'w-full tablet:max-w-[225px]'}
+            className={'w-full tablet:max-w-[315px]'}
             color={'secondary'}
             onClick={(): void => openModal()}
             startIcon={<Add />}
           >
-            NOVO CADASTRO
+            Solicitar nova funcionalidade
           </Button>
         )
       }
       size={'medium'}
-      title={`${keyword ? 'EDIÇÃO' : 'CADASTRO'} DE PALAVRAS-CHAVES`}
+      title={`${newFunctionality ? 'Ediçao' : 'Cadastro'} de nova funcionalidade`}
     >
-      <div>form</div>
+      <NewFunctionalityForm closeModal={closeModal} newFunctionality={newFunctionality} />
     </Modal>
   );
 };

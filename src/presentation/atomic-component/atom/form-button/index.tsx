@@ -5,11 +5,13 @@ interface FormButtonProps {
   isSubmitting: boolean;
   label: string;
   id?: string;
+  disableRipple?: boolean;
 }
 
-export const FormButton: FC<FormButtonProps> = ({ isSubmitting, label, id }) => (
+export const FormButton: FC<FormButtonProps> = ({ isSubmitting, disableRipple, label, id }) => (
   <Button
     className={'w-full flex gap-2'}
+    disableRipple={disableRipple}
     id={id ?? 'form-button'}
     size={'large'}
     type={isSubmitting ? 'button' : 'submit'}

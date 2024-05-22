@@ -45,7 +45,9 @@ export const BodyCell: FC<BodyCellProps> = ({
     }}
     scope={'row'}
     sx={{
+      backgroundColor: colors.gray[800],
       borderColor: lastRow ? 'transparent' : colors.gray[200],
+      color: 'white',
       padding: '10px 6px',
       ...sx
     }}

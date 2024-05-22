@@ -1,7 +1,9 @@
 import { IconButton, Slide } from '@mui/material';
-import { SidebarItems } from 'main/mock';
+import { IconRender } from 'presentation/atomic-component/atom';
+import { paths } from 'main/config';
 import { setSidebar } from 'store/sidebar/slice';
 import { useDispatch } from 'react-redux';
+import { useFindPlatformQuery } from 'infra/cache';
 import { useNavigate } from 'react-router-dom';
 import { usePath } from 'data/hooks';
 import { useSidebar } from 'store/sidebar/selector';
@@ -11,7 +13,9 @@ export const MobileSidebar: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const sidebar = useSidebar();
-  const { firstPathname } = usePath();
+  const { lastPathname, allPathname } = usePath();
+
+  const platformQuery = useFindPlatformQuery({});
 
   return (
     <Slide
@@ -34,19 +38,56 @@ export const MobileSidebar: FC = () => {
           <div className={`fixed z-5 w-full left-0 bg-gray-800 ${sidebar ? 'flex' : 'hidden'}`} />
 
           <div className={'flex flex-col gap-[10px] overflow-auto'}>
-            {SidebarItems.map((sidebarItem) => (
+            <div
+              className={'px-3 cursor-pointer'}
+              onClick={(): void => {
+                navigate(paths.home);
+                dispatch(setSidebar(false));
+              }}
+              title={'Home'}
+            >
               <div
-                key={sidebarItem.link}
+                className={`flex gap-4 items-center rounded-md ml-[-5px] pl-[5px] h-[40px] ${
+                  lastPathname === 'plataforma' ? 'bg-gray-700 text-white' : ''
+                }`}
+              >
+                <IconButton
+                  color={'inherit'}
+                  sx={{
+                    padding: '1px'
+                  }}
+                >
+                  <IconRender
+                    name={'Home'}
+                    sx={{
+                      fontSize: '1.95rem'
+                    }}
+                  />
+                </IconButton>
+
+                <span
+                  className={`h-[1.5rem] font-semibold overflow-hidden cursor-pointer ${
+                    lastPathname === 'plataforma' ? 'text-white' : 'text-white'
+                  }`}
+                >
+                  Home
+                </span>
+              </div>
+            </div>
+
+            {platformQuery.data?.content.map((sidebarItem) => (
+              <div
+                key={sidebarItem.id}
                 className={'px-3 cursor-pointer'}
                 onClick={(): void => {
-                  navigate(sidebarItem.link);
+                  navigate(paths.platform(sidebarItem.keyword));
                   dispatch(setSidebar(false));
                 }}
                 title={sidebarItem.name}
               >
                 <div
                   className={`flex gap-4 items-center rounded-md ml-[-5px] pl-[5px] h-[40px] ${
-                    sidebarItem.link === firstPathname ? 'bg-gray-700 text-white' : ''
+                    allPathname.includes(sidebarItem.keyword) ? 'bg-gray-700 text-white' : ''
                   }`}
                 >
                   <IconButton
@@ -55,8 +96,8 @@ export const MobileSidebar: FC = () => {
                       padding: '1px'
                     }}
                   >
-                    <sidebarItem.icon
-                      color={'inherit'}
+                    <IconRender
+                      name={sidebarItem.image}
                       sx={{
                         fontSize: '1.95rem'
                       }}
@@ -65,7 +106,7 @@ export const MobileSidebar: FC = () => {
 
                   <span
                     className={`h-[1.5rem] font-semibold overflow-hidden cursor-pointer ${
-                      sidebarItem.link === firstPathname ? 'text-white' : 'text-white'
+                      allPathname.includes(sidebarItem.keyword) ? 'text-white' : 'text-white'
                     }`}
                   >
                     {sidebarItem.name}

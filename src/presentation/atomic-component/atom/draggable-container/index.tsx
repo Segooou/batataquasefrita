@@ -75,7 +75,7 @@ export const DraggableContainer: FC<DraggableContainerProps> = ({ children, heig
   return (
     <div
       className={
-        'w-full overflow-x-auto overflow-y-hidden bg-gray-800 px-4 cursor-grab active:cursor-grabbing flex items-center gap-3'
+        'w-full rounded-md overflow-x-auto overflow-y-hidden bg-gray-800 px-4 cursor-grab active:cursor-grabbing flex items-center gap-4'
       }
       onMouseDown={handleMouseDown}
       onMouseLeave={handleMouseLeave}
@@ -85,18 +85,28 @@ export const DraggableContainer: FC<DraggableContainerProps> = ({ children, heig
       style={{ height }}
     >
       {aaa?.map((item, index) => {
-        if (break2 && aaa.length > break2) {
-          if (item && index % 2 === 0)
+        const item1 = aaa[index];
+
+        if (break2 && aaa.length >= break2) {
+          if (item && index % 2 === 0) {
+            const item2 = aaa[index] as { props: { className: string } };
+
             return (
               <div key={random()} className={'flex flex-col gap-4'}>
-                {ReturnItem(aaa[index])}
-                {ReturnItem(aaa[index + 1])}
+                {ReturnItem(item1)}
+
+                {aaa[index + 1] ? (
+                  ReturnItem(aaa[index + 1])
+                ) : (
+                  <div className={`${item2?.props?.className} bg-gray-800 border-none`} />
+                )}
               </div>
             );
+          }
 
           return null;
         }
-        return ReturnItem(aaa[index]);
+        return ReturnItem(item1);
       })}
     </div>
   );

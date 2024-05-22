@@ -1,13 +1,14 @@
 import { Collapse, IconButton, List, ListItemButton } from '@mui/material';
-import { ExpandMore, Logout } from '@mui/icons-material';
+import { ExpandMore, Logout, Person } from '@mui/icons-material';
 import { type FC, useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ToggleMenu } from 'presentation/atomic-component/atom';
 import { colors } from 'presentation/style';
 import { getUser } from 'store/persist/selector';
 import { logout } from 'store/persist/slice';
 import { paths } from 'main/config';
 import { useDispatch } from 'react-redux';
+import { usePath } from 'data/hooks';
 import Avatar from '@mui/material/Avatar';
 
 interface HeaderProps {
@@ -22,8 +23,11 @@ export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
     if (showUser) setShowUser(false);
   }, [pathname]);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = getUser();
+
+  const { lastPathname } = usePath();
 
   return (
     <header
@@ -83,7 +87,15 @@ export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
                 'flex bg-gray-800 text-white justify-between gap-2 items-center ml-auto h-[48px] rounded-3xl'
               }
             >
-              <Avatar>{user?.username.slice(0, 1).toUpperCase()}</Avatar>
+              <Avatar
+                className={'cursor-pointer'}
+                onClick={(): void => {
+                  if (`/${lastPathname}` !== paths.profile) navigate(paths.profile);
+                }}
+                src={user?.avatar ?? ''}
+              >
+                {user?.username.slice(0, 1).toUpperCase()}
+              </Avatar>
 
               <div
                 className={'flex flex-col gap-1'}
@@ -114,11 +126,23 @@ export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
             </div>
 
             <List
-              className={'flex bg-gray-800 flex-col gap-1 border-2 border-t-0 text-sm'}
+              className={'flex bg-gray-800 text-white flex-col gap-1 border-2 border-t-0 text-sm'}
               sx={{
                 padding: '4px 0px'
               }}
             >
+              <Link to={paths.profile}>
+                <ListItemButton className={'gap-2'}>
+                  <Person
+                    sx={{
+                      fontSize: '16px'
+                    }}
+                  />
+
+                  <span>Perfil</span>
+                </ListItemButton>
+              </Link>
+
               {/* <ListItemButton
               className={'gap-2'}
               sx={{

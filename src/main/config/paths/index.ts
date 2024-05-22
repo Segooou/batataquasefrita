@@ -1,18 +1,21 @@
 /* eslint-disable sort-keys-fix/sort-keys-fix */
 export enum routePaths {
   login = '/',
-  home = '/home',
+  home = '/plataforma',
+  platform = '/plataforma/:platformKeyword',
+  functionality = '/plataforma/:platformKeyword/:functionalityKeyword',
   profile = '/perfil',
-  stake = '/stake',
   recoverPassword = '/recuperar-senha',
   register = '/cadastro'
 }
 
 export const paths = {
   login: '/',
-  home: '/home',
+  home: '/plataforma',
+  platform: (platformKeyword: string): string => `/plataforma/${platformKeyword}`,
+  functionality: (platformKeyword: string, functionalityKeyword: string): string =>
+    `/plataforma/${platformKeyword}/${functionalityKeyword}`,
   profile: '/perfil',
-  stake: '/stake',
   recoverPassword: '/recuperar-senha',
   register: '/cadastro'
 };
@@ -21,5 +24,11 @@ export const apiPaths = {
   default: '/default',
   auth: '/login',
   resetPassword: '/reset-password',
-  sendEmail: '/email'
+  platform: '/platform',
+  action: '/action',
+  user: '/user',
+  favoriteUserFunctionality: '/favorite-user-functionality',
+  functionality: '/functionality',
+  newFunctionality: '/new-functionality',
+  email: 'email'
 };

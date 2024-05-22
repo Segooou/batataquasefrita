@@ -1,5 +1,6 @@
 import { Box, Button, IconButton, Modal as ModalUI } from '@mui/material';
 import { Close } from '@mui/icons-material';
+import { colors } from 'presentation/style';
 import type { FC, ReactNode } from 'react';
 import type { OverridableComponent } from '@mui/types';
 import type { SvgIconTypeMap } from '@mui/material';
@@ -83,7 +84,7 @@ export const Modal: FC<ModalProps> = ({ children, openModal, closeModal, ...prop
               'w-full tablet:w-auto max-h-[90%] tablet:max-h-[95%] rounded-md flex flex-col gap-4 left-[50%] top-[50%] absolute translate-y-[-50%] translate-x-[-50%] max-w-[94%] laptop:max-w-[98%] overflow-auto'
             }
             sx={{
-              backgroundColor: props.hideBackground ? 'transparent' : 'white',
+              backgroundColor: props.hideBackground ? 'transparent' : colors.gray[800],
               padding: props.hideBackground ? '0px' : '24px',
               width: getWidth(props.size)
             }}
@@ -92,14 +93,12 @@ export const Modal: FC<ModalProps> = ({ children, openModal, closeModal, ...prop
               <div className={'flex flex-col'}>
                 <div className={'flex justify-end'}>
                   <IconButton onClick={closeModal}>
-                    <Close className={'text-gray-550'} />
+                    <Close className={'text-white'} />
                   </IconButton>
                 </div>
 
                 {typeof props.title === 'string' ? (
-                  <h2 className={'font-extrabold text-lg text-center text-blue-semiDark'}>
-                    {props.title}
-                  </h2>
+                  <h2 className={'font-extrabold text-lg text-center text-white'}>{props.title}</h2>
                 ) : (
                   props.title
                 )}

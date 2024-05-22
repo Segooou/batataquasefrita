@@ -14,8 +14,6 @@ export const PrivateRoute: FC<PrivateRouteProps> = ({ isRedirect }) => {
 
   const navigate = useNavigate();
 
-  console.log(isExpired);
-
   useEffect(() => {
     if (isRedirect) navigate(paths.login);
     if (isExpired) navigate(paths.login);

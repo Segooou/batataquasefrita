@@ -9,7 +9,7 @@ export const GoBack: FC = () => {
         window.history.back();
       }}
       startIcon={<NavigateBefore />}
-      sx={{ height: '35px' }}
+      sx={{ height: '35px', padding: '16px 24px' }}
       variant={'contained'}
     >
       Voltar
