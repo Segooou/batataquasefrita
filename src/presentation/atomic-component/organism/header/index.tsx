@@ -8,6 +8,7 @@ import { getUser } from 'store/persist/selector';
 import { logout } from 'store/persist/slice';
 import { paths } from 'main/config';
 import { useDispatch } from 'react-redux';
+import { useFindOneUserQuery } from 'infra/cache';
 import { usePath } from 'data/hooks';
 import Avatar from '@mui/material/Avatar';
 
@@ -26,6 +27,7 @@ export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = getUser();
+  const userQuery = useFindOneUserQuery({ id: user.id });
 
   const { lastPathname } = usePath();
 
@@ -92,9 +94,9 @@ export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
                 onClick={(): void => {
                   if (`/${lastPathname}` !== paths.profile) navigate(paths.profile);
                 }}
-                src={user?.avatar ?? ''}
+                src={userQuery.data?.avatar ?? ''}
               >
-                {user?.username.slice(0, 1).toUpperCase()}
+                {userQuery.data?.username.slice(0, 1).toUpperCase()}
               </Avatar>
 
               <div
@@ -105,7 +107,7 @@ export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
                   width: showUser ? '125px' : '0px'
                 }}
               >
-                <span className={'font-semibold text-xs truncate'}>{user?.username}</span>
+                <span className={'font-semibold text-xs truncate'}>{userQuery.data?.username}</span>
               </div>
 
               <IconButton

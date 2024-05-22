@@ -1,14 +1,12 @@
 /* eslint-disable @typescript-eslint/prefer-destructuring */
 import { ActionTableBody } from 'presentation/atomic-component/molecule/table/body';
 import { ActionTableHeader } from 'presentation/atomic-component/molecule/table/header';
-import { Avatar, IconButton } from '@mui/material';
-import { Edit } from '@mui/icons-material';
+import { Avatar } from '@mui/material';
 import { GoBack, TableTemplate } from 'presentation/atomic-component/atom';
 import { Pagination } from 'presentation/atomic-component/molecule';
 import { QueryName, apiPaths } from 'main/config';
 import { api } from 'infra/http';
 import { callToast, resolverError } from 'main/utils';
-import { colors } from 'presentation/style';
 import { getUser } from 'store/persist/selector';
 import { queryClient } from 'infra/lib';
 import { useFindActionQuery, useFindOneUserQuery } from 'infra/cache';
@@ -77,19 +75,7 @@ export const ProfileContent: FC = () => {
           type={'file'}
         />
 
-        <div>{userQuery.data?.username?.replace('segou', 'Italo ignacio')}</div>
-
-        <IconButton
-          sx={{
-            border: `1px solid ${colors.gray[550]}`
-          }}
-        >
-          <Edit
-            sx={{
-              color: 'white'
-            }}
-          />
-        </IconButton>
+        <div>{userQuery.data?.username}</div>
       </div>
 
       {actionsQuery.data ? (
