@@ -16,4 +16,4 @@ export const useFindOnePlatformQuery = ({
 export const useFindOnePlatformKeywordQuery = ({
   ...props
 }: useFindQueryProps & { id: string }): UseQueryResult<Platform> =>
-  useFindQuery<Platform>({ ...props, id: `/keyword/${props.id}`, route: 'platform' });
+  useFindQuery<Platform>({ ...props, id: `keyword/${props.id}`, route: 'platform' });

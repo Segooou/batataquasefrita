@@ -16,4 +16,4 @@ export const useFindOneFunctionalityQuery = ({
 export const useFindOneFunctionalityKeywordQuery = ({
   ...props
 }: useFindQueryProps & { id: string }): UseQueryResult<Functionality> =>
-  useFindQuery<Functionality>({ ...props, id: `/keyword/${props.id}`, route: 'functionality' });
+  useFindQuery<Functionality>({ ...props, id: `keyword/${props.id}`, route: 'functionality' });
