@@ -1,15 +1,18 @@
 import { DraggableContainer } from 'presentation/atomic-component/atom';
-import { paths } from 'main/config';
+import { dimensions, paths } from 'main/config';
 import { useFindPlatformQuery } from 'infra/cache';
 import { useNavigate } from 'react-router-dom';
+import { useWindowDimensions } from 'data/hooks';
 import type { FC } from 'react';
 
 export const DraggablePlatform: FC = () => {
   const platformQuery = useFindPlatformQuery({});
 
+  const { width } = useWindowDimensions();
+
   const navigate = useNavigate();
 
-  const break2 = 16;
+  const break2 = width < dimensions.tablet ? 3 : 16;
 
   return (
     <div className={'flex flex-col gap-2'}>
@@ -18,7 +21,7 @@ export const DraggablePlatform: FC = () => {
       <DraggableContainer
         break2={break2}
         height={
-          platformQuery.data?.content && platformQuery.data?.content.length >= break2 ? 240 : 140
+          platformQuery.data?.content && platformQuery.data?.content.length >= break2 ? 280 : 150
         }
       >
         {platformQuery.data?.content.map((item) => {
@@ -38,7 +41,7 @@ export const DraggablePlatform: FC = () => {
                 } else navigate(paths.platform(item.keyword));
               }}
             >
-              <span className={'text-center'}>{item.name}</span>
+              <span className={'text-center font-semibold'}>{item.name}</span>
             </div>
           );
         })}

@@ -6,10 +6,10 @@ export const ActionTableHeader: FC = () => {
   return (
     <TableHead>
       <TableRow>
-        <HeaderCell align={'center'} title={'Plataforma'} width={'20%'} />
-        <HeaderCell align={'center'} title={'Funcionalidade'} width={'25%'} />
-        <HeaderCell align={'center'} title={'Dados Enviados'} width={'25%'} />
-        <HeaderCell align={'center'} title={'Resultado'} width={'30%'} />
+        <HeaderCell align={'center'} minWidth={100} title={'Plataforma'} />
+        <HeaderCell align={'center'} minWidth={300} title={'Funcionalidade'} />
+        <HeaderCell align={'center'} minWidth={300} title={'Dados Enviados'} />
+        <HeaderCell align={'center'} minWidth={300} title={'Resultado'} />
       </TableRow>
     </TableHead>
   );

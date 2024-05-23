@@ -1,5 +1,6 @@
 import { type FC, useState } from 'react';
 import { FormButton, LabelInput } from 'presentation/atomic-component/atom';
+import { PlatformModal } from 'presentation/atomic-component/molecule/modal/platform';
 import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { listToSelect } from 'main/utils';
 import { useFindPlatformQuery } from 'infra/cache';
@@ -35,21 +36,27 @@ export const NewFunctionalityForm: FC<NewFunctionalityFormProps> = ({
         label={'Nome da funcionalidade'}
         placeholder={'Digite o nome da funcionalidade'}
         register={register('name')}
+        required
       />
 
-      <Select
-        error={!!errors.platformId}
-        id={'new-functionalit-platform-select'}
-        label={'Plataforma'}
-        onChange={(newValue): void => {
-          const value = newValue as SelectValues | null;
+      <div className={'flex flex-col tablet:flex-row gap-3 items-center'}>
+        <Select
+          error={!!errors.platformId}
+          id={'new-functionalit-platform-select'}
+          label={'Plataforma'}
+          onChange={(newValue): void => {
+            const value = newValue as SelectValues | null;
 
-          setValue('platformId', value?.value as unknown as number, { shouldValidate: true });
-          setPlatformSelected(value);
-        }}
-        options={listToSelect(platformQuery.data?.content ?? [])}
-        value={platformSelected}
-      />
+            setValue('platformId', value?.value as unknown as number, { shouldValidate: true });
+            setPlatformSelected(value);
+          }}
+          options={listToSelect(platformQuery.data?.content ?? [])}
+          required
+          value={platformSelected}
+        />
+
+        <PlatformModal />
+      </div>
 
       <LabelInput
         error={!!errors.description}
@@ -58,6 +65,7 @@ export const NewFunctionalityForm: FC<NewFunctionalityFormProps> = ({
         minRows={6}
         placeholder={'Digite a descrição da funcionalidade'}
         register={register('description')}
+        required
         textarea
       />
 

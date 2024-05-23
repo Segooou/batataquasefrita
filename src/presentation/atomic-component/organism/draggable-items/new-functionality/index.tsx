@@ -4,8 +4,9 @@ import {
   NewFunctionalityModal,
   ShowNewFunctionalityModal
 } from 'presentation/atomic-component/molecule/modal';
+import { dimensions } from 'main/config';
 import { useFindNewFunctionalityQuery } from 'infra/cache';
-import { useModal } from 'data/hooks';
+import { useModal, useWindowDimensions } from 'data/hooks';
 import type { NewFunctionality } from 'domain/models';
 
 export const DraggableNewFunctionality: FC = () => {
@@ -20,9 +21,11 @@ export const DraggableNewFunctionality: FC = () => {
     null
   );
 
+  const { width } = useWindowDimensions();
+
   const modal = useModal();
 
-  const break2 = 8;
+  const break2 = width < dimensions.tablet ? 3 : 8;
 
   return (
     <div className={'flex flex-col gap-2'}>
@@ -36,8 +39,8 @@ export const DraggableNewFunctionality: FC = () => {
         height={
           newFunctionalityQuery.data?.content &&
           newFunctionalityQuery.data?.content.length >= break2
-            ? 240
-            : 140
+            ? 280
+            : 150
         }
       >
         {newFunctionalityQuery.data?.content.map((item) => {
@@ -45,7 +48,7 @@ export const DraggableNewFunctionality: FC = () => {
             <div
               key={item.id}
               className={
-                'min-w-[200px] flex-col gap-2 px-6 bg-gray-700 border border-gray-550 rounded-md h-[100px] bg-blue-500 flex items-center justify-center text-white'
+                'min-w-[200px] flex-col gap-2 px-6 bg-gray-700 border border-gray-550 rounded-md h-[120px] bg-blue-500 flex items-center justify-center text-white'
               }
               onClick={(): void => {
                 setNewFunctionalitySelected(item);
@@ -55,9 +58,9 @@ export const DraggableNewFunctionality: FC = () => {
                 backgroundColor: item.wasRaised ? '#224e22' : undefined
               }}
             >
-              <span className={'text-center'}>{item.name}</span>
+              <span className={'text-center line-clamp-3'}>{item.name}</span>
 
-              <span>
+              <span className={'min-w-max'}>
                 Plataforma: <span className={'font-semibold'}>{item.platform.name}</span>
               </span>
             </div>

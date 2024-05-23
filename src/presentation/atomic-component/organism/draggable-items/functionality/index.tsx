@@ -1,7 +1,8 @@
 import { DraggableContainer } from 'presentation/atomic-component/atom';
-import { paths } from 'main/config';
+import { dimensions, paths } from 'main/config';
 import { useFindFunctionalityQuery } from 'infra/cache';
 import { useNavigate } from 'react-router-dom';
+import { useWindowDimensions } from 'data/hooks';
 import type { FC } from 'react';
 
 export const DraggableFunctionality: FC = () => {
@@ -9,7 +10,9 @@ export const DraggableFunctionality: FC = () => {
 
   const navigate = useNavigate();
 
-  const break2 = 8;
+  const { width } = useWindowDimensions();
+
+  const break2 = width < dimensions.tablet ? 3 : 8;
 
   return (
     <div className={'flex flex-col gap-2'}>
@@ -19,8 +22,8 @@ export const DraggableFunctionality: FC = () => {
         break2={break2}
         height={
           functionalityQuery.data?.content && functionalityQuery.data?.content.length >= break2
-            ? 240
-            : 140
+            ? 280
+            : 150
         }
       >
         {functionalityQuery.data?.content.map((item) => {
@@ -28,7 +31,7 @@ export const DraggableFunctionality: FC = () => {
             <div
               key={item.id}
               className={
-                'min-w-[200px] flex-col gap-2 px-6 bg-gray-700 border border-gray-550 rounded-md h-[100px] bg-blue-500 flex items-center justify-center text-white'
+                'min-w-[200px] flex-col gap-2 px-6 bg-gray-700 border border-gray-550 rounded-md h-[120px] bg-blue-500 flex items-center justify-center text-white'
               }
               onClick={(event): void => {
                 const newTab = event?.ctrlKey || event?.metaKey || event?.button === 1;
@@ -43,9 +46,9 @@ export const DraggableFunctionality: FC = () => {
                 } else navigate(paths.functionality(item.platform.keyword, item.keyword));
               }}
             >
-              <span className={'text-center font-semibold'}>{item.name}</span>
+              <span className={'text-center font-semibold line-clamp-3'}>{item.name}</span>
 
-              <span>
+              <span className={'min-w-max'}>
                 Plataforma: <span className={'font-semibold'}>{item.platform.name}</span>
               </span>
             </div>

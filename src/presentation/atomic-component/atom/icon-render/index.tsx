@@ -9,9 +9,12 @@ interface IconRenderProps {
 }
 
 export const IconRender: FC<IconRenderProps> = ({ name, sx }) => {
-  const IconComponent = MaterialIcons[name as keyof typeof MaterialIcons];
+  const name2 = `${name.slice(0, 1).toUpperCase()}${name.slice(1)}`.replace(/ /gu, '');
+  const formattedName = name2.endsWith('Icon') ? name2.replace('Icon', '') : name2;
 
-  if (!IconComponent) return null;
+  const IconComponent = MaterialIcons[formattedName as keyof typeof MaterialIcons];
+
+  if (!IconComponent) return <div className={'text-red font-semibold'}>Ícone inválido</div>;
 
   return <IconComponent color={'inherit'} sx={sx} />;
 };
