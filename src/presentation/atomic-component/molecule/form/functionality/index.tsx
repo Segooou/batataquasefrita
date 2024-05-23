@@ -15,7 +15,7 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [data, setData] = useState(functionality.inputProps);
-  const [result, setResult] = useState('');
+  const [result, setResult] = useState<string[]>([]);
 
   const validateForm = (index?: number, focus?: boolean): boolean => {
     const errors: number[] = [];
@@ -46,7 +46,7 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
   const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
 
-    setResult('');
+    setResult([]);
     if (validateForm(undefined, true))
       try {
         const body = {
@@ -58,7 +58,7 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
         });
 
         setIsSubmitting(true);
-        const response = await api.post<string>({
+        const response = await api.post<string[]>({
           body,
           route: functionality.apiRoute
         });
@@ -77,7 +77,7 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
         className={'flex mx-auto flex-col w-full relative gap-4 max-w-[500px]'}
         onSubmit={onSubmit}
       >
-        {result ? (
+        {result.length > 0 ? (
           <div
             className={
               'hidden laptop:flex absolute top-[-80px] right-[-200px] desktop:right-[-250px]'
@@ -87,7 +87,7 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
               color={'error'}
               onClick={(): void => {
                 setIsSubmitting(false);
-                setResult('');
+                setResult([]);
                 setData(functionality.inputProps);
                 document.getElementById(`input-data-${functionality.inputProps?.[0]?.id}`)?.focus();
               }}
@@ -111,9 +111,13 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
         <FormButton isSubmitting={isSubmitting} label={'Enviar'} />
       </form>
 
-      {result ? (
-        <div className={'flex gap-4 max-w-[550px] w-full mx-auto'}>
-          <InputToCopy value={result} />
+      {result.length > 0 ? (
+        <div className={'flex flex-col gap-3'}>
+          {result.map((item) => (
+            <div key={item} className={'flex gap-4 max-w-[550px] w-full mx-auto'}>
+              <InputToCopy value={item} />
+            </div>
+          ))}
         </div>
       ) : null}
     </div>
