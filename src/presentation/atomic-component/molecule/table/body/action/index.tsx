@@ -31,8 +31,12 @@ export const ActionTableBody: FC<ActionTableProps> = ({ items }) => {
           <BodyCell
             align={'center'}
             title={
-              <div className={'flex gap-3'}>
-                <InputToCopy max={2} value={item.result} />
+              <div className={'flex flex-col gap-3'}>
+                {item.result.map((value) => (
+                  <div key={value} className={'flex gap-4'}>
+                    <InputToCopy value={value} />
+                  </div>
+                ))}
               </div>
             }
           />

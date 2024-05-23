@@ -5,7 +5,7 @@ export type ActionType = 'copy' | 'none';
 
 export interface Action {
   id: number;
-  result: string;
+  result: string[];
   data: object | null;
   hasError: boolean;
   action: ActionType;
