@@ -77,26 +77,6 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
         className={'flex mx-auto flex-col w-full relative gap-4 max-w-[500px]'}
         onSubmit={onSubmit}
       >
-        {result.length > 0 ? (
-          <div
-            className={
-              'hidden laptop:flex absolute top-[-80px] right-[-200px] desktop:right-[-250px]'
-            }
-          >
-            <Button
-              color={'error'}
-              onClick={(): void => {
-                setIsSubmitting(false);
-                setResult([]);
-                setData(functionality.inputProps);
-                document.getElementById(`input-data-${functionality.inputProps?.[0]?.id}`)?.focus();
-              }}
-            >
-              Limpar campos
-            </Button>
-          </div>
-        ) : null}
-
         {data.map((item, index) => (
           <InputData
             key={item.id}
@@ -118,6 +98,20 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
               <InputToCopy value={item} />
             </div>
           ))}
+
+          <div className={'flex gap-4 mt-4 justify-center max-w-[500px] w-full mx-auto'}>
+            <Button
+              color={'error'}
+              onClick={(): void => {
+                setIsSubmitting(false);
+                setResult([]);
+                setData(functionality.inputProps);
+                document.getElementById(`input-data-${functionality.inputProps?.[0]?.id}`)?.focus();
+              }}
+            >
+              Limpar campos
+            </Button>
+          </div>
         </div>
       ) : null}
     </div>
