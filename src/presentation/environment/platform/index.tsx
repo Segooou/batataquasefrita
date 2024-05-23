@@ -24,7 +24,7 @@ export const PlatformContent: FC = () => {
 
       <h2 className={'font-bold text-2xl'}>{platformQuery.data?.name}</h2>
 
-      <div className={'flex flex-wrap'}>
+      <div className={'flex flex-wrap gap-4'}>
         {functionalitiesQuery.data?.content.map((item) => (
           <Link
             key={item.id}
