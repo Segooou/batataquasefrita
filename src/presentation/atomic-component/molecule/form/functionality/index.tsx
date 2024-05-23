@@ -114,7 +114,7 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
       {result.length > 0 ? (
         <div className={'flex flex-col gap-3'}>
           {result.map((item) => (
-            <div key={item} className={'flex gap-4 max-w-[550px] w-full mx-auto'}>
+            <div key={item} className={'flex gap-4 max-w-[500px] w-full mx-auto'}>
               <InputToCopy value={item} />
             </div>
           ))}
