@@ -1,5 +1,8 @@
 /* eslint-disable no-unmodified-loop-condition */
 /* eslint-disable no-await-in-loop */
+
+'use client';
+
 import { Button } from '@mui/material';
 import { FormButton, InputToCopy } from 'presentation/atomic-component/atom';
 import { InputData } from 'presentation/atomic-component/molecule/input-data';
@@ -74,6 +77,8 @@ export const FunctionalitySheets1Form: FC<FunctionalityFormProps> = ({ functiona
         setResult((prevData) => [...(prevData ?? []), newValue]);
       }
     }
+
+    setIsSubmitting(false);
   };
 
   const validateForm = (index?: number, focus?: boolean): boolean => {

@@ -1,8 +1,13 @@
+/* eslint-disable no-unmodified-loop-condition */
+/* eslint-disable no-await-in-loop */
+
+'use client';
+
 import { Button } from '@mui/material';
 import { FormButton, InputToCopy } from 'presentation/atomic-component/atom';
 import { InputData } from 'presentation/atomic-component/molecule/input-data';
-import { api } from 'infra/http';
-import { resolverError } from 'main/utils';
+import { decryptData, resolverError } from 'main/utils';
+import { store } from 'store';
 import { useState } from 'react';
 import type { FC, FormEvent } from 'react';
 import type { Functionality } from 'domain/models';
@@ -49,6 +54,12 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
     setResult([]);
     if (validateForm(undefined, true))
       try {
+        const accessToken = decryptData(store.getState().persist.accessToken || '');
+
+        const headers = { 'Content-Type': 'application/json' };
+
+        if (accessToken) Object.assign(headers, { Authorization: `Bearer ${accessToken}` });
+
         const body = {
           functionalityId: functionality.id
         };
@@ -58,12 +69,30 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
         });
 
         setIsSubmitting(true);
-        const response = await api.post<string[]>({
-          body,
-          route: functionality.apiRoute
+        const apiUrl = `${import.meta.env.VITE_API_URL}${functionality.apiRoute}`;
+
+        const response = await fetch(apiUrl, {
+          body: JSON.stringify(body),
+          headers,
+          method: 'POST'
         });
 
-        setResult(response);
+        const reader = response.body?.getReader();
+        const decoder = new TextDecoder();
+        let completed = false;
+
+        while (!completed && typeof reader !== 'undefined') {
+          const { value, done } = await reader.read();
+
+          completed = done;
+          if (value) {
+            const chunk = decoder.decode(value, { stream: true });
+
+            const newValue = JSON.parse(chunk);
+
+            setResult((prevData) => [...(prevData ?? []), newValue?.result]);
+          }
+        }
       } catch (error) {
         resolverError(error);
       } finally {
