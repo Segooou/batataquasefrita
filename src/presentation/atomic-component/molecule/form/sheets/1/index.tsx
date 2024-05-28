@@ -68,10 +68,13 @@ export const FunctionalitySheets1Form: FC<FunctionalityFormProps> = ({ functiona
     while (!completed && typeof reader !== 'undefined') {
       const { value, done } = await reader.read();
 
+      console.log(value, done);
+
       completed = done;
       if (value) {
         const chunk = decoder.decode(value, { stream: true });
 
+        console.log(chunk);
         const newValue = JSON.parse(chunk);
 
         setResult((prevData) => [...(prevData ?? []), newValue]);
