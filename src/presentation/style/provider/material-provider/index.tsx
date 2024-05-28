@@ -86,7 +86,7 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
             props: { color: 'success' },
             style: {
               ':hover': {
-                backgroundColor: '#dbdada'
+                backgroundColor: '#c4c4c4'
               },
               backgroundColor: colors.gray[300],
               color: colors.gray[900],

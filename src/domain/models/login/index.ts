@@ -6,7 +6,7 @@ export enum Role {
 export interface UserProps {
   id: number;
   username: string;
-  role: string;
+  role: Role;
   avatar: string | null;
 }
 

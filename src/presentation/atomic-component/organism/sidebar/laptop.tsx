@@ -1,9 +1,12 @@
 import { type FC, useRef } from 'react';
+import { Flight } from '@mui/icons-material';
 import { IconRender } from 'presentation/atomic-component/atom';
+import { Link } from 'react-router-dom';
+import { Role } from 'domain/models';
+import { getUser } from 'store/persist/selector';
 import { paths } from 'main/config';
 import { useAppSelector } from 'store';
 import { useFindPlatformQuery } from 'infra/cache';
-import { useNavigate } from 'react-router-dom';
 import { usePath } from 'data/hooks';
 
 interface LaptopSidebarProps {
@@ -11,10 +14,10 @@ interface LaptopSidebarProps {
 }
 
 export const LaptopSidebar: FC<LaptopSidebarProps> = ({ headerIsBig }) => {
-  const navigate = useNavigate();
   const containerRef = useRef(null);
   const { open } = useAppSelector((state) => state.sidebar);
   const { lastPathname, allPathname } = usePath();
+  const user = getUser();
 
   const platformQuery = useFindPlatformQuery({});
 
@@ -27,52 +30,42 @@ export const LaptopSidebar: FC<LaptopSidebarProps> = ({ headerIsBig }) => {
     >
       <div className={'flex flex-col justify-between gap-3 h-full'}>
         <div className={'flex flex-col gap-3'}>
-          <div
-            className={'px-3 cursor-pointer'}
-            onClick={(): void => {
-              navigate(paths.home);
-            }}
-            title={'Home'}
-          >
-            <div
-              className={`flex gap-4 items-center rounded-md ml-[-5px] pl-[5px] h-[40px] transition-[width] ease-in delay-75 ${
-                open ? 'w-full ' : 'w-[38px]'
-              } ${lastPathname === 'plataforma' ? 'bg-gray-700 text-white' : 'text-white hover:bg-[#4e4e4e67]'}`}
-            >
-              <IconRender
-                name={'Home'}
-                sx={{
-                  fontSize: '1.65rem'
-                }}
-              />
+          {user.role === Role.admin ? (
+            <Link to={paths.panel}>
+              <div className={'px-3 cursor-pointer'} title={'Painel'}>
+                <div
+                  className={`flex gap-4 items-center rounded-md ml-[-5px] pl-[5px] h-[40px] transition-[width] ease-in delay-75 ${
+                    open ? 'w-full ' : 'w-[38px]'
+                  } ${lastPathname === 'painel' ? 'bg-gray-700 text-white' : 'text-white hover:bg-[#4e4e4e67]'}`}
+                >
+                  <Flight
+                    name={'Painel'}
+                    sx={{
+                      fontSize: '1.65rem'
+                    }}
+                  />
 
-              <span
-                className={`h-[1.5rem] font-semibold transition-[width] ease-in-out overflow-hidden cursor-pointer ${
-                  open ? 'w-[200px]' : 'w-[0px]'
-                } ${lastPathname === 'plataforma' ? 'text-white' : 'text-white'}`}
-              >
-                Home
-              </span>
-            </div>
-          </div>
+                  <span
+                    className={`h-[1.5rem] font-semibold transition-[width] ease-in-out overflow-hidden cursor-pointer ${
+                      open ? 'w-[200px]' : 'w-[0px]'
+                    } ${lastPathname === 'painel' ? 'text-white' : 'text-white'}`}
+                  >
+                    Painel
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ) : null}
 
-          {platformQuery.data?.content.map((sidebarItem) => (
-            <div
-              key={sidebarItem.id}
-              className={'px-3 cursor-pointer'}
-              onClick={(): void => {
-                if (lastPathname !== sidebarItem.keyword)
-                  navigate(paths.platform(sidebarItem.keyword));
-              }}
-              title={sidebarItem.name}
-            >
+          <Link to={paths.home}>
+            <div className={'px-3 cursor-pointer'} title={'Home'}>
               <div
                 className={`flex gap-4 items-center rounded-md ml-[-5px] pl-[5px] h-[40px] transition-[width] ease-in delay-75 ${
                   open ? 'w-full ' : 'w-[38px]'
-                } ${allPathname.includes(sidebarItem.keyword) ? 'bg-gray-700 text-white' : 'text-white hover:bg-[#4e4e4e67]'}`}
+                } ${lastPathname === 'plataforma' ? 'bg-gray-700 text-white' : 'text-white hover:bg-[#4e4e4e67]'}`}
               >
                 <IconRender
-                  name={sidebarItem.image}
+                  name={'Home'}
                   sx={{
                     fontSize: '1.65rem'
                   }}
@@ -81,12 +74,39 @@ export const LaptopSidebar: FC<LaptopSidebarProps> = ({ headerIsBig }) => {
                 <span
                   className={`h-[1.5rem] font-semibold transition-[width] ease-in-out overflow-hidden cursor-pointer ${
                     open ? 'w-[200px]' : 'w-[0px]'
-                  } ${allPathname.includes(sidebarItem.keyword) ? 'text-white' : 'text-white'}`}
+                  } ${lastPathname === 'plataforma' ? 'text-white' : 'text-white'}`}
                 >
-                  {sidebarItem.name}
+                  Home
                 </span>
               </div>
             </div>
+          </Link>
+
+          {platformQuery.data?.content.map((sidebarItem) => (
+            <Link key={sidebarItem.id} to={paths.platform(sidebarItem.keyword)}>
+              <div className={'px-3 cursor-pointer'} title={sidebarItem.name}>
+                <div
+                  className={`flex gap-4 items-center rounded-md ml-[-5px] pl-[5px] h-[40px] transition-[width] ease-in delay-75 ${
+                    open ? 'w-full ' : 'w-[38px]'
+                  } ${allPathname.includes(sidebarItem.keyword) ? 'bg-gray-700 text-white' : 'text-white hover:bg-[#4e4e4e67]'}`}
+                >
+                  <IconRender
+                    name={sidebarItem.image}
+                    sx={{
+                      fontSize: '1.65rem'
+                    }}
+                  />
+
+                  <span
+                    className={`h-[1.5rem] font-semibold transition-[width] ease-in-out overflow-hidden cursor-pointer ${
+                      open ? 'w-[200px]' : 'w-[0px]'
+                    } ${allPathname.includes(sidebarItem.keyword) ? 'text-white' : 'text-white'}`}
+                  >
+                    {sidebarItem.name}
+                  </span>
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
       </div>

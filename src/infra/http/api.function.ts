@@ -30,6 +30,11 @@ export const fetchApi = async <T>(params: ApiProps): Promise<T> => {
     method: params.method
   });
 
+  if ((response.status as unknown as HttpStatusCode) === HttpStatusCode.unauthorized) {
+    window.location.href = `${window.location.origin}?removeLogin=true`.replace('/?', '');
+    return null as T;
+  }
+
   if ((response.status as unknown as HttpStatusCode) === HttpStatusCode.noContent) return null as T;
 
   if (response.headers.get('Total-Elements')) {
