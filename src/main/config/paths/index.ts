@@ -1,6 +1,8 @@
 /* eslint-disable sort-keys-fix/sort-keys-fix */
 export enum routePaths {
   login = '/',
+  panel = '/painel',
+  user = '/usuarios',
   home = '/plataforma',
   platform = '/plataforma/:platformKeyword',
   functionality = '/plataforma/:platformKeyword/:functionalityKeyword',
@@ -12,6 +14,8 @@ export enum routePaths {
 export const paths = {
   login: '/',
   home: '/plataforma',
+  panel: '/usuarios',
+  user: '/painel',
   platform: (platformKeyword: string): string => `/plataforma/${platformKeyword}`,
   functionality: (platformKeyword: string, functionalityKeyword: string): string =>
     `/plataforma/${platformKeyword}/${functionalityKeyword}`,

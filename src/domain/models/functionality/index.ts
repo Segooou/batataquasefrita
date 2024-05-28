@@ -5,6 +5,7 @@ export interface Functionality {
   id: number;
   name: string;
   keyword: string;
+  googleSheets: number | null;
   apiRoute: string;
   description: string | null;
   platform: Platform;

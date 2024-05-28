@@ -1,13 +1,15 @@
+import { AdminRoute, LoginRoute, PrivateRoute } from 'main/proxies';
 import {
   AuthContent,
   FunctionalityContent,
   HomeContent,
+  PanelContent,
   PlatformContent,
-  ProfileContent
+  ProfileContent,
+  UserContent
 } from 'presentation/environment';
 import { AuthTemplate, MainTemplate } from 'presentation/atomic-component/template';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
-import { LoginRoute, PrivateRoute } from 'main/proxies';
 import { Suspense } from 'react';
 import { routePaths } from 'main/config';
 import type { FC } from 'react';
@@ -30,6 +32,13 @@ const RouterConfig: FC = () => (
             <Route element={<ProfileContent />} path={routePaths.profile} />
             <Route element={<PlatformContent />} path={routePaths.platform} />
             <Route element={<FunctionalityContent />} path={routePaths.functionality} />
+          </Route>
+        </Route>
+
+        <Route element={<AdminRoute />}>
+          <Route element={<MainTemplate />}>
+            <Route element={<PanelContent />} path={routePaths.panel} />
+            <Route element={<UserContent />} path={routePaths.user} />
           </Route>
         </Route>
 

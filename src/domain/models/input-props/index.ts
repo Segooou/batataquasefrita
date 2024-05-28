@@ -1,5 +1,7 @@
 export interface InputProps {
   id: number;
+  colSpan?: boolean;
+  uppercase?: boolean;
   value?: string;
   label: string;
   placeholder: string;
@@ -9,7 +11,7 @@ export interface InputProps {
   type: string;
   mask: string | null;
   maskLength: number | null;
-  finishedAt: string | null;
-  createdAt: string;
-  updatedAt: string;
+  finishedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
 }

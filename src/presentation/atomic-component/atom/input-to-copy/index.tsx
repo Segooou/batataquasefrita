@@ -26,9 +26,9 @@ export const InputToCopy: FC<InputToCopyProps> = ({ value, max = 4, number = 30 
     <>
       <LabelInput
         inputRef={inputRef}
-        maxRows={value.length > number ? max : 1}
-        minRows={value.length > number ? max : 1}
-        textarea={value.length > number}
+        maxRows={value?.length > number ? max : 1}
+        minRows={value?.length > number ? max : 1}
+        textarea={value?.length > number}
         value={value}
       />
 
