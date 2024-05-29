@@ -92,26 +92,38 @@ export const FunctionalitySheets1Form: FC<FunctionalityFormProps> = ({ functiona
             <div
               key={item?.data?.email}
               className={
-                'flex border border-gray-200 p-4 rounded-sm mx-auto max-w-[900px] justify-center items-center gap-4'
+                'grid grid-cols-1 laptop:grid-cols-2 border border-gray-200 p-4 rounded-sm mx-auto max-w-[900px] justify-center items-center gap-4'
               }
             >
               <div className={'flex flex-col gap-4'}>
-                <div className={'flex gap-4 max-w-[500px] w-full mx-auto items-center'}>
-                  <span className={'min-w-max'}>E-mail:</span>
-                  <InputToCopy number={100} value={item?.data?.email} />
+                <div
+                  className={
+                    'flex flex-col tablet:flex-row gap-4 max-w-[500px] w-full mx-auto items-center'
+                  }
+                >
+                  <div className={'flex gap-3'}>
+                    <InputToCopy label={'E-mail:'} number={100} value={item?.data?.email} />
+                  </div>
                 </div>
 
-                <div className={'flex gap-4 max-w-[500px] w-full mx-auto items-center'}>
-                  <span className={'min-w-max'}>Senha:</span>
-                  <InputToCopy value={item?.data?.password} />
+                <div
+                  className={
+                    'flex flex-col tablet:flex-row gap-4 max-w-[500px] w-full mx-auto items-center'
+                  }
+                >
+                  <div className={'flex gap-3'}>
+                    <InputToCopy label={'Senha:'} value={item?.data?.password} />
+                  </div>
                 </div>
               </div>
 
-              {item?.result?.map((itemResult) => (
-                <div key={itemResult} className={'flex gap-4 max-w-[500px] mx-auto'}>
-                  <InputToCopy value={itemResult} />
-                </div>
-              ))}
+              <div className={'flex flex-col gap-4 items-center justify-center'}>
+                {item?.result?.map((itemResult) => (
+                  <div key={itemResult} className={'flex gap-4 max-w-[500px] mx-auto'}>
+                    <InputToCopy label={'Resultado'} value={itemResult} />
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
 

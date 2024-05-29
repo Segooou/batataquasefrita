@@ -72,12 +72,15 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
             <div
               key={item?.data?.email}
               className={
-                'flex border border-gray-200 p-4 rounded-sm mx-auto max-w-[900px] justify-center items-center gap-4'
+                'grid grid-cols-1 laptop:grid-cols-2 border border-gray-200 p-4 rounded-sm mx-auto max-w-[900px] gap-4'
               }
             >
-              {item?.result?.map((itemResult) => (
-                <div key={itemResult} className={'flex gap-4 max-w-[500px] mx-auto'}>
-                  <InputToCopy value={itemResult} />
+              {item?.result?.map((itemResult, index) => (
+                <div
+                  key={itemResult}
+                  className={`flex gap-4 max-w-[500px] mx-auto ${index + 1 === item.result?.length && index % 2 === 0 ? 'col-span-2' : ''}`}
+                >
+                  <InputToCopy label={'Resultado'} value={itemResult} />
                 </div>
               ))}
             </div>

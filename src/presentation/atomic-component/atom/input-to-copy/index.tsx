@@ -6,10 +6,11 @@ import { callToast } from 'main/utils';
 interface InputToCopyProps {
   value: string;
   number?: number;
+  label?: string;
   max?: number;
 }
 
-export const InputToCopy: FC<InputToCopyProps> = ({ value, max = 4, number = 30 }) => {
+export const InputToCopy: FC<InputToCopyProps> = ({ value, label, max = 4, number = 30 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const copyToClipboard = (): void => {
@@ -26,6 +27,7 @@ export const InputToCopy: FC<InputToCopyProps> = ({ value, max = 4, number = 30 
     <>
       <LabelInput
         inputRef={inputRef}
+        label={label}
         maxRows={value?.length > number ? max : 1}
         minRows={value?.length > number ? max : 1}
         textarea={value?.length > number}
