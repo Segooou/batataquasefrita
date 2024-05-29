@@ -25,7 +25,7 @@ export const fetchApi = async <T>(params: ApiProps): Promise<T> => {
       : '';
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const fetchWithTimeout = (url: string, options: RequestInit, timeout = 50000) => {
+  const fetchWithTimeout = (url: string, options: RequestInit, timeout = 500000) => {
     return Promise.race([
       fetch(url, options),
       // eslint-disable-next-line no-promise-executor-return
