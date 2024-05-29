@@ -1,14 +1,10 @@
-/* eslint-disable no-unmodified-loop-condition */
-/* eslint-disable no-await-in-loop */
-
-'use client';
-
 import { Button } from '@mui/material';
 import { FormButton, InputToCopy } from 'presentation/atomic-component/atom';
 import { InputData } from 'presentation/atomic-component/molecule/input-data';
-import { decryptData, resolverError } from 'main/utils';
-import { store } from 'store';
+import { api } from 'infra/http';
+import { resolverError, validateForm } from 'main/utils';
 import { useState } from 'react';
+import type { DataProps } from 'presentation/atomic-component/molecule/form/sheets';
 import type { FC, FormEvent } from 'react';
 import type { Functionality } from 'domain/models';
 
@@ -20,46 +16,14 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [data, setData] = useState(functionality.inputProps);
-  const [result, setResult] = useState<string[]>([]);
-
-  const validateForm = (index?: number, focus?: boolean): boolean => {
-    const errors: number[] = [];
-
-    const newData = data.map((item, itemIndex) => {
-      const value = { ...item };
-
-      if ((index && index === itemIndex) || !index)
-        if (item.isRequired && !item.value) {
-          errors.push(item.id);
-          value.error = true;
-        } else value.error = false;
-
-      return value;
-    });
-
-    setData(newData);
-
-    if (errors.length > 0) {
-      if (focus) document.getElementById(`input-data-${errors[0]}`)?.focus();
-
-      return false;
-    }
-
-    return true;
-  };
+  const [result, setResult] = useState<DataProps[]>([]);
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
 
     setResult([]);
-    if (validateForm(undefined, true))
+    if (validateForm({ data, focus: true, index: undefined, setData }))
       try {
-        const accessToken = decryptData(store.getState().persist.accessToken || '');
-
-        const headers = { 'Content-Type': 'application/json' };
-
-        if (accessToken) Object.assign(headers, { Authorization: `Bearer ${accessToken}` });
-
         const body = {
           functionalityId: functionality.id
         };
@@ -69,30 +33,12 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
         });
 
         setIsSubmitting(true);
-        const apiUrl = `${import.meta.env.VITE_API_URL}${functionality.apiRoute}`;
-
-        const response = await fetch(apiUrl, {
-          body: JSON.stringify(body),
-          headers,
-          method: 'POST'
+        const response = await api.post<DataProps[]>({
+          body,
+          route: functionality.apiRoute
         });
 
-        const reader = response.body?.getReader();
-        const decoder = new TextDecoder();
-        let completed = false;
-
-        while (!completed && typeof reader !== 'undefined') {
-          const { value, done } = await reader.read();
-
-          completed = done;
-          if (value) {
-            const chunk = decoder.decode(value, { stream: true });
-
-            const newValue = JSON.parse(chunk);
-
-            setResult((prevData) => [...(prevData ?? []), newValue?.result]);
-          }
-        }
+        setResult(response);
       } catch (error) {
         resolverError(error);
       } finally {
@@ -121,10 +67,19 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
       </form>
 
       {result.length > 0 ? (
-        <div className={'flex flex-col gap-3'}>
+        <div className={'flex flex-col gap-3 text-lg'}>
           {result.map((item) => (
-            <div key={item} className={'flex gap-4 max-w-[500px] w-full mx-auto'}>
-              <InputToCopy value={item} />
+            <div
+              key={item?.data?.email}
+              className={
+                'flex border border-gray-200 p-4 rounded-sm mx-auto max-w-[900px] justify-center items-center gap-4'
+              }
+            >
+              {item?.result?.map((itemResult) => (
+                <div key={itemResult} className={'flex gap-4 max-w-[500px] mx-auto'}>
+                  <InputToCopy value={itemResult} />
+                </div>
+              ))}
             </div>
           ))}
 

@@ -23,7 +23,7 @@ export const inputPropsSheet1: InputProps[] = [
     ...defaultProps
   },
   {
-    id: 0,
+    id: 1,
     label: 'Nome da planilha',
     formValue: 'sheetName',
     placeholder: '',
@@ -31,7 +31,7 @@ export const inputPropsSheet1: InputProps[] = [
     ...defaultProps
   },
   {
-    id: 0,
+    id: 2,
     label: 'Coluna para resposta',
     formValue: 'resultColumn',
     uppercase: true,
@@ -40,7 +40,7 @@ export const inputPropsSheet1: InputProps[] = [
     ...defaultProps
   },
   {
-    id: 0,
+    id: 3,
     label: 'Coluna do E-mail',
     formValue: 'email',
     uppercase: true,
@@ -49,7 +49,7 @@ export const inputPropsSheet1: InputProps[] = [
     ...defaultProps
   },
   {
-    id: 0,
+    id: 4,
     label: 'Coluna da Senha',
     formValue: 'password',
     uppercase: true,
@@ -58,7 +58,7 @@ export const inputPropsSheet1: InputProps[] = [
     ...defaultProps
   },
   {
-    id: 0,
+    id: 5,
     label: 'Linha para começar',
     formValue: 'startRow',
     placeholder: '',
@@ -66,7 +66,7 @@ export const inputPropsSheet1: InputProps[] = [
     ...defaultProps
   },
   {
-    id: 0,
+    id: 6,
     label: 'Linha para terminar',
     formValue: 'endRow',
     placeholder: '',

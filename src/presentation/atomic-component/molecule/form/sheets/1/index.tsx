@@ -1,14 +1,11 @@
 /* eslint-disable no-unmodified-loop-condition */
 /* eslint-disable no-await-in-loop */
-
-'use client';
-
 import { Button } from '@mui/material';
 import { FormButton, InputToCopy } from 'presentation/atomic-component/atom';
 import { InputData } from 'presentation/atomic-component/molecule/input-data';
-import { decryptData, resolverError } from 'main/utils';
+import { api } from 'infra/http';
 import { inputPropsSheet1 } from 'main/utils/input-props-sheet-1';
-import { store } from 'store';
+import { resolverError, validateForm } from 'main/utils';
 import { useState } from 'react';
 import type { FC, FormEvent } from 'react';
 import type { Functionality } from 'domain/models';
@@ -31,93 +28,35 @@ export const FunctionalitySheets1Form: FC<FunctionalityFormProps> = ({ functiona
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const fetchData = async (): Promise<void> => {
-    const accessToken = decryptData(store.getState().persist.accessToken || '');
-
-    const headers = { 'Content-Type': 'application/json' };
-
-    if (accessToken) Object.assign(headers, { Authorization: `Bearer ${accessToken}` });
-
-    const body = {
-      functionalityId: functionality.id,
-      googleSheets: {}
-    };
-
-    data.forEach((item) => {
-      const getValue = (): number | string => {
-        if (item.uppercase) return String(item.value ?? '').toUpperCase();
-
-        return item.value ?? '';
-      };
-
-      Object.assign(body.googleSheets, { [item.formValue]: getValue() });
-    });
-
-    const apiUrl = `${import.meta.env.VITE_API_URL}${functionality.apiRoute}`;
-
-    const response = await fetch(apiUrl, {
-      body: JSON.stringify(body),
-      headers,
-      method: 'POST'
-    });
-
-    const reader = response.body?.getReader();
-    const decoder = new TextDecoder();
-    let completed = false;
-
-    while (!completed && typeof reader !== 'undefined') {
-      const { value, done } = await reader.read();
-
-      console.log(value, done);
-
-      completed = done;
-      if (value) {
-        const chunk = decoder.decode(value, { stream: true });
-
-        console.log(chunk);
-        const newValue = JSON.parse(chunk);
-
-        setResult((prevData) => [...(prevData ?? []), newValue]);
-      }
-    }
-
-    setIsSubmitting(false);
-  };
-
-  const validateForm = (index?: number, focus?: boolean): boolean => {
-    const errors: number[] = [];
-
-    const newData = data.map((item, itemIndex) => {
-      const value = { ...item };
-
-      if ((index && index === itemIndex) || !index)
-        if (item.isRequired && !item.value) {
-          errors.push(item.id);
-          value.error = true;
-        } else value.error = false;
-
-      return value;
-    });
-
-    setData(newData);
-
-    if (errors.length > 0) {
-      if (focus) document.getElementById(`input-data-${errors[0]}`)?.focus();
-
-      return false;
-    }
-
-    return true;
-  };
-
   const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
 
-    setData([]);
-    if (validateForm(undefined, true))
+    setResult([]);
+    if (validateForm({ data, focus: true, index: undefined, setData }))
       try {
+        const body = {
+          functionalityId: functionality.id,
+          googleSheets: {}
+        };
+
+        data.forEach((item) => {
+          const getValue = (): number | string => {
+            if (item.uppercase) return String(item.value ?? '').toUpperCase();
+
+            return item.value ?? '';
+          };
+
+          Object.assign(body.googleSheets, { [item.formValue]: getValue() });
+        });
+
         setIsSubmitting(true);
-        await fetchData();
+
+        const response = await api.post<DataProps[]>({
+          body,
+          route: functionality.apiRoute
+        });
+
+        setResult(response);
       } catch (error) {
         resolverError(error);
       } finally {
@@ -181,7 +120,8 @@ export const FunctionalitySheets1Form: FC<FunctionalityFormProps> = ({ functiona
               color={'error'}
               onClick={(): void => {
                 setIsSubmitting(false);
-                setData([]);
+                setResult([]);
+                setData(inputPropsSheet1);
                 document.getElementById(`input-data-${functionality.inputProps?.[0]?.id}`)?.focus();
               }}
             >

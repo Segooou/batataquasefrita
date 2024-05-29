@@ -1,12 +1,13 @@
 import { LabelInput } from 'presentation/atomic-component/atom';
 import type { Dispatch, FC, SetStateAction } from 'react';
 import type { InputProps } from 'domain/models';
+import type { validateFormProps } from 'main/utils';
 
 interface InputDataProps {
   inputData: InputProps;
   index: number;
   data: InputProps[];
-  validateForm: (index?: number) => unknown | false;
+  validateForm: (data: validateFormProps) => unknown | false;
   setData: Dispatch<SetStateAction<InputProps[]>>;
 }
 
@@ -32,7 +33,7 @@ export const InputData: FC<InputDataProps> = ({
           setData(newData);
         }}
         onFocusOut={(): void => {
-          if (error) validateForm(index);
+          if (error) validateForm({ data, index, setData });
         }}
         placeholder={placeholder}
         required={isRequired}
