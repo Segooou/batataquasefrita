@@ -24,11 +24,20 @@ export const fetchApi = async <T>(params: ApiProps): Promise<T> => {
       ? `?${new URLSearchParams(removeUndefined(params.queryParams))}`
       : '';
 
-  const response = await fetch(`${baseUrl}${params.route}${id}${queryParams}`, {
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const fetchWithTimeout = (url: string, options: RequestInit, timeout = 50000) => {
+    return Promise.race([
+      fetch(url, options),
+      // eslint-disable-next-line no-promise-executor-return
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), timeout))
+    ]);
+  };
+
+  const response = (await fetchWithTimeout(`${baseUrl}${params.route}${id}${queryParams}`, {
     body,
     headers,
     method: params.method
-  });
+  })) as unknown as Response;
 
   if ((response.status as unknown as HttpStatusCode) === HttpStatusCode.unauthorized) {
     window.location.href = `${window.location.origin}?removeLogin=true`.replace('/?', '');
