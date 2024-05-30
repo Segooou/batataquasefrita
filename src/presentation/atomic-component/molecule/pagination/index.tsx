@@ -1,4 +1,6 @@
 import { Pagination as PaginationUI } from '@mui/material';
+import { dimensions } from 'main/config';
+import { useWindowDimensions } from 'data/hooks';
 import type { FC } from 'react';
 
 interface PaginationProps {
@@ -12,7 +14,10 @@ export const Pagination: FC<PaginationProps> = ({
   totalPages,
   handleChangePage
 }: PaginationProps) => {
+  const { width } = useWindowDimensions();
+
   if (totalPages === 0) return null;
+
   return (
     <div className={'flex justify-center'}>
       <PaginationUI
@@ -21,7 +26,7 @@ export const Pagination: FC<PaginationProps> = ({
         onChange={handleChangePage}
         page={page}
         shape={'rounded'}
-        siblingCount={1}
+        siblingCount={width < dimensions.tablet ? 0 : 1}
         variant={'outlined'}
       />
     </div>

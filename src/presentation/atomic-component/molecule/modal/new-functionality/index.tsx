@@ -1,5 +1,5 @@
 import { Add, Edit } from '@mui/icons-material';
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
 import { Modal } from 'presentation/atomic-component/atom/modal';
 import { NewFunctionalityForm } from 'presentation/atomic-component/molecule/form';
 import { useModal } from 'data/hooks';
@@ -20,20 +20,14 @@ export const NewFunctionalityModal: FC<NewFunctionalityModalProps> = ({ newFunct
       openModal={openModal}
       openModalElement={
         newFunctionality ? (
-          <IconButton
+          <div
+            className={
+              'bg-gray-700 hover:bg-gray-550 border border-gray-500 rounded-md p-2 cursor-pointer'
+            }
             onClick={openModal}
-            sx={{
-              ':hover': {
-                backgroundColor: '#2b5f9e6a'
-              },
-              backgroundColor: '#1D427338',
-              color: '#1D4273',
-              height: '38px',
-              width: '38px'
-            }}
           >
             <Edit />
-          </IconButton>
+          </div>
         ) : (
           <Button
             className={'w-full tablet:max-w-[315px]'}

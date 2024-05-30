@@ -4,7 +4,7 @@ import { resolverError } from 'main/utils';
 import { toast } from 'react-toastify';
 
 interface useDeleteProps {
-  id: string;
+  id: number | string;
   route: unknown;
   closeModal: () => void;
   queryName: string;

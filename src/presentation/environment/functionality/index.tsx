@@ -32,7 +32,7 @@ export const FunctionalityContent: FC = () => {
       </div>
 
       {functionalityQuery.data?.googleSheets && functionalityQuery.data?.googleSheets !== null ? (
-        <div className={'flex gap-4 laptop:-mt-12 mb-4 justify-center'}>
+        <div className={'flex gap-4 laptop:-mt-[60px] mb-4 justify-center'}>
           <Button color={isSheet ? undefined : 'success'} onClick={changeSheet}>
             Formulário
           </Button>

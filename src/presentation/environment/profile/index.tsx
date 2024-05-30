@@ -1,14 +1,10 @@
 /* eslint-disable @typescript-eslint/prefer-destructuring */
 import { ActionTableBody } from 'presentation/atomic-component/molecule/table/body';
 import { ActionTableHeader } from 'presentation/atomic-component/molecule/table/header';
-import { Avatar } from '@mui/material';
 import { GoBack, TableTemplate } from 'presentation/atomic-component/atom';
+import { ImageModal, UserModal } from 'presentation/atomic-component/molecule/modal';
 import { Pagination } from 'presentation/atomic-component/molecule';
-import { QueryName, apiPaths } from 'main/config';
-import { api } from 'infra/http';
-import { callToast, resolverError } from 'main/utils';
 import { getUser } from 'store/persist/selector';
-import { queryClient } from 'infra/lib';
 import { useFindActionQuery, useFindOneUserQuery } from 'infra/cache';
 import { usePagination } from 'data/hooks';
 import type { FC } from 'react';
@@ -31,55 +27,13 @@ export const ProfileContent: FC = () => {
       </div>
 
       <div className={'flex gap-4 items-center mx-auto max-w-[450px]'}>
-        <Avatar
-          className={'cursor-pointer hover:bg-[#ffffff98]'}
-          onClick={(): void => document.getElementById('select-avatar-image')?.click()}
-          src={userQuery.data?.avatar ?? ''}
-          sx={{
-            height: '50px',
-            width: '50px'
-          }}
-        >
-          {userQuery.data?.username.slice(0, 1).toUpperCase()}
-        </Avatar>
-
-        <input
-          accept={'image/*'}
-          className={'hidden'}
-          id={'select-avatar-image'}
-          onChange={async (event): Promise<void> => {
-            if (event.target.files?.length) {
-              const image = event.target.files[0];
-
-              if (image.type.includes('image/')) {
-                const formData = new FormData();
-
-                formData.append('image', image);
-
-                try {
-                  await api.put({
-                    body: formData,
-                    id: user.id,
-                    isFormData: true,
-                    route: apiPaths.user
-                  });
-
-                  callToast.success('Imagem enviada com sucesso');
-                  queryClient.invalidateQueries(QueryName.user);
-                } catch (error) {
-                  resolverError(error);
-                }
-              }
-            }
-          }}
-          type={'file'}
-        />
-
+        <ImageModal name={userQuery.data?.username} url={userQuery.data?.avatar} />
         <div>{userQuery.data?.username}</div>
+        {userQuery.data ? <UserModal user={userQuery.data} /> : null}
       </div>
 
       {actionsQuery.data ? (
-        <div className={'flex flex-col gap-3'}>
+        <div className={'flex flex-col gap-6 max-w-[1500px] w-full mx-auto'}>
           <h2 className={'font-semibold text-2xl'}>Histórico de uso</h2>
 
           <TableTemplate

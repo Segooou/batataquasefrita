@@ -1,7 +1,8 @@
 import { Collapse, IconButton, List, ListItemButton } from '@mui/material';
 import { ExpandMore, Logout, Person } from '@mui/icons-material';
 import { type FC, useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { ImageModal } from 'presentation/atomic-component/molecule/modal';
+import { Link, useLocation } from 'react-router-dom';
 import { ToggleMenu } from 'presentation/atomic-component/atom';
 import { colors } from 'presentation/style';
 import { getUser } from 'store/persist/selector';
@@ -9,8 +10,6 @@ import { logout } from 'store/persist/slice';
 import { paths } from 'main/config';
 import { useDispatch } from 'react-redux';
 import { useFindOneUserQuery } from 'infra/cache';
-import { usePath } from 'data/hooks';
-import Avatar from '@mui/material/Avatar';
 
 interface HeaderProps {
   headerIsBig: boolean;
@@ -24,12 +23,9 @@ export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
     if (showUser) setShowUser(false);
   }, [pathname]);
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = getUser();
   const userQuery = useFindOneUserQuery({ id: user.id });
-
-  const { lastPathname } = usePath();
 
   return (
     <header
@@ -89,15 +85,7 @@ export const Header: FC<HeaderProps> = ({ headerIsBig }) => {
                 'flex bg-gray-800 text-white justify-between gap-2 items-center ml-auto h-[48px] rounded-3xl'
               }
             >
-              <Avatar
-                className={'cursor-pointer'}
-                onClick={(): void => {
-                  if (`/${lastPathname}` !== paths.profile) navigate(paths.profile);
-                }}
-                src={userQuery.data?.avatar ?? ''}
-              >
-                {userQuery.data?.username.slice(0, 1).toUpperCase()}
-              </Avatar>
+              <ImageModal name={userQuery.data?.username} small url={userQuery.data?.avatar} />
 
               <div
                 className={'flex flex-col gap-1'}

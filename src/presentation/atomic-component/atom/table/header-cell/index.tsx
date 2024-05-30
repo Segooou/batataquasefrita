@@ -29,6 +29,7 @@ export const HeaderCell: FC<HeaderCellProps> = ({
     sx={{
       backgroundColor: backgroundColor ?? colors.gray[900],
       border: '0',
+      borderBottom: `2px solid ${colors.gray[550]}`,
       color: 'white',
       fontWeight: '600',
       maxWidth,

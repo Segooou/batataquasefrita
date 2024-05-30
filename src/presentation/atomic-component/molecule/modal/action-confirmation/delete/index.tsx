@@ -1,5 +1,5 @@
-import { Button, IconButton } from '@mui/material';
-import { DeleteForever } from '@mui/icons-material';
+import { Button } from '@mui/material';
+import { Delete } from '@mui/icons-material';
 import { Modal } from 'presentation/atomic-component/atom/modal';
 import { useDelete } from 'data/use-case';
 import { useModal } from 'data/hooks';
@@ -8,7 +8,7 @@ import type { FC, ReactNode } from 'react';
 interface DeleteConfirmationModalProps {
   text: ReactNode | string;
   title: string;
-  id: string;
+  id: number | string;
   route: unknown;
   queryName: string;
   successMessage: string;
@@ -55,26 +55,22 @@ export const DeleteConfirmationModal: FC<DeleteConfirmationModalProps> = ({
             {openElement}
           </div>
         ) : (
-          <IconButton
+          <div
+            className={
+              'bg-gray-700 hover:bg-gray-550 border border-gray-500 rounded-md p-2 cursor-pointer'
+            }
             onClick={openModal}
-            sx={{
-              ':hover': {
-                backgroundColor: '#f1b9a3'
-              },
-              backgroundColor: '#F3DBD2',
-              height: '38px',
-              padding: '5px',
-              width: '38px'
-            }}
           >
-            <DeleteForever color={'error'} />
-          </IconButton>
+            <Delete />
+          </div>
         )
       }
       size={'small'}
       title={title}
     >
-      <div className={'w-full h-full flex justify-center items-center flex-col p-4 gap-8'}>
+      <div
+        className={'w-full h-full flex justify-center items-center flex-col p-4 gap-8 text-white'}
+      >
         <span className={'text-center'}>{text}</span>
 
         <div className={'flex flex-row gap-4  justify-between items-center'}>
@@ -82,7 +78,7 @@ export const DeleteConfirmationModal: FC<DeleteConfirmationModalProps> = ({
             Apagar
           </Button>
 
-          <Button onClick={closeModal} variant={'outlined'}>
+          <Button color={'error'} onClick={closeModal}>
             Cancelar
           </Button>
         </div>

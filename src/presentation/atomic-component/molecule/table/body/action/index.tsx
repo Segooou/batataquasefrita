@@ -10,8 +10,18 @@ interface ActionTableProps {
 export const ActionTableBody: FC<ActionTableProps> = ({ items }) => {
   return (
     <TableBody className={'relative'}>
+      {items?.length === 0 ? (
+        <TableRow>
+          <BodyCell
+            align={'center'}
+            colSpan={4}
+            title={<div className={'p-4 font-semibold text-xl'}>Nenhum item encontrado</div>}
+          />
+        </TableRow>
+      ) : null}
+
       {items?.map((item) => (
-        <TableRow key={item.id} hover>
+        <TableRow key={item.id}>
           <BodyCell align={'center'} title={item.functionality.platform.name} />
           <BodyCell align={'center'} title={item.functionality.name} />
 

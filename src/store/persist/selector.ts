@@ -7,5 +7,5 @@ export const getUser = (): UserProps => {
 
   if (user) return JSON.parse(user) as UserProps;
 
-  return { avatar: null, id: 0, role: Role.common, username: '' };
+  return { _count: { actions: 0 }, avatar: null, id: 0, role: Role.common, username: '' };
 };

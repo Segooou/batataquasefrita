@@ -28,7 +28,7 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
           popper: {
             '& .MuiAutocomplete-option': {
               '&:hover': {
-                backgroundColor: colors.gray[550]
+                backgroundColor: `${colors.gray[550]} !important`
               },
               '&[aria-selected="true"]': {
                 backgroundColor: colors.gray[700]
@@ -38,8 +38,7 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
             },
             '& .MuiAutocomplete-paper': {
               backgroundColor: colors.gray[900]
-            },
-            backgroundColor: colors.gray[900]
+            }
           }
         }
       },
@@ -230,6 +229,16 @@ export const MaterialUIProvider: FC<Children> = ({ children }: Children) => {
               transform: 'translateX(12px)'
             },
             padding: 8
+          }
+        }
+      },
+      MuiTableRow: {
+        styleOverrides: {
+          root: {
+            ':hover': {
+              backgroundColor: colors.gray[900]
+            },
+            backgroundColor: colors.gray[800]
           }
         }
       },

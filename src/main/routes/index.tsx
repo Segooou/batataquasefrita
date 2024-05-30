@@ -5,8 +5,7 @@ import {
   HomeContent,
   PanelContent,
   PlatformContent,
-  ProfileContent,
-  UserContent
+  ProfileContent
 } from 'presentation/environment';
 import { AuthTemplate, MainTemplate } from 'presentation/atomic-component/template';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
@@ -38,7 +37,6 @@ const RouterConfig: FC = () => (
         <Route element={<AdminRoute />}>
           <Route element={<MainTemplate />}>
             <Route element={<PanelContent />} path={routePaths.panel} />
-            <Route element={<UserContent />} path={routePaths.user} />
           </Route>
         </Route>
 

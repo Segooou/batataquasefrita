@@ -5,6 +5,9 @@ export interface Platform {
   name: string;
   keyword: string;
   image: string;
+  _count: {
+    functionalities: number;
+  };
   description: string | null;
   finishedAt: string | null;
   createdAt: string;

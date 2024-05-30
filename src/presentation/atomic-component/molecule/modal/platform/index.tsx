@@ -1,5 +1,5 @@
 import { Add, Edit } from '@mui/icons-material';
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
 import { Modal } from 'presentation/atomic-component/atom/modal';
 import { PlatformForm } from 'presentation/atomic-component/molecule/form/platform';
 import { useModal } from 'data/hooks';
@@ -20,27 +20,17 @@ export const PlatformModal: FC<PlatformModalProps> = ({ platform }) => {
       openModal={openModal}
       openModalElement={
         platform ? (
-          <IconButton
+          <div
+            className={
+              'bg-gray-700 hover:bg-gray-550 border border-gray-500 rounded-md p-2 cursor-pointer'
+            }
             onClick={openModal}
-            sx={{
-              ':hover': {
-                backgroundColor: '#2b5f9e6a'
-              },
-              backgroundColor: '#1D427338',
-              color: '#1D4273',
-              height: '38px',
-              width: '38px'
-            }}
           >
             <Edit />
-          </IconButton>
+          </div>
         ) : (
-          <Button
-            className={'w-full tablet:w-[270px] h-[50px]'}
-            onClick={(): void => openModal()}
-            startIcon={<Add />}
-          >
-            nova plataforma
+          <Button onClick={(): void => openModal()} startIcon={<Add />}>
+            Adicionar plataforma
           </Button>
         )
       }

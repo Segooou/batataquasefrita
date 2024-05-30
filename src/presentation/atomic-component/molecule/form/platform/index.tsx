@@ -1,7 +1,8 @@
+import { type FC, useEffect } from 'react';
 import { FormButton, IconRender, LabelInput } from 'presentation/atomic-component/atom';
 import { Link } from 'react-router-dom';
 import { usePlatform } from 'data/use-case';
-import type { FC } from 'react';
+import { validate } from 'main/utils';
 import type { Platform } from 'domain/models';
 
 interface PlatformFormProps {
@@ -15,6 +16,13 @@ export const PlatformForm: FC<PlatformFormProps> = ({ closeModal, platform }) =>
       closeModal,
       platform
     });
+
+  useEffect(() => {
+    if (platform) {
+      setValue('image', platform.image, validate);
+      setValue('name', platform.name, validate);
+    }
+  }, [platform]);
 
   return (
     <form className={'flex flex-col gap-4'} onSubmit={handleSubmit(onSubmit)}>

@@ -1,8 +1,7 @@
-import { type FC, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import { FormButton, LabelInput } from 'presentation/atomic-component/atom';
-import { PlatformModal } from 'presentation/atomic-component/molecule/modal/platform';
 import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
-import { listToSelect } from 'main/utils';
+import { listToSelect, validate } from 'main/utils';
 import { useFindPlatformQuery } from 'infra/cache';
 import { useNewFunctionality } from 'data/use-case';
 import type { NewFunctionality } from 'domain/models';
@@ -29,6 +28,18 @@ export const NewFunctionalityForm: FC<NewFunctionalityFormProps> = ({
     }
   });
 
+  useEffect(() => {
+    if (newFunctionality) {
+      setValue('description', newFunctionality.description, validate);
+      setValue('name', newFunctionality.name, validate);
+      setValue('platformId', newFunctionality.platform.id, validate);
+      setPlatformSelected({
+        label: newFunctionality.platform.name,
+        value: String(newFunctionality.platform.id)
+      });
+    }
+  }, [newFunctionality]);
+
   return (
     <form className={'flex flex-col gap-4'} onSubmit={handleSubmit(onSubmit)}>
       <LabelInput
@@ -39,24 +50,20 @@ export const NewFunctionalityForm: FC<NewFunctionalityFormProps> = ({
         required
       />
 
-      <div className={'flex flex-col tablet:flex-row gap-3 items-center'}>
-        <Select
-          error={!!errors.platformId}
-          id={'new-functionalit-platform-select'}
-          label={'Plataforma'}
-          onChange={(newValue): void => {
-            const value = newValue as SelectValues | null;
+      <Select
+        error={!!errors.platformId}
+        id={'new-functionalit-platform-select'}
+        label={'Plataforma'}
+        onChange={(newValue): void => {
+          const value = newValue as SelectValues | null;
 
-            setValue('platformId', value?.value as unknown as number, { shouldValidate: true });
-            setPlatformSelected(value);
-          }}
-          options={listToSelect(platformQuery.data?.content ?? [])}
-          required
-          value={platformSelected}
-        />
-
-        <PlatformModal />
-      </div>
+          setValue('platformId', value?.value as unknown as number, { shouldValidate: true });
+          setPlatformSelected(value);
+        }}
+        options={listToSelect(platformQuery.data?.content ?? [])}
+        required
+        value={platformSelected}
+      />
 
       <LabelInput
         error={!!errors.description}
