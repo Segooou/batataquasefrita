@@ -1,5 +1,5 @@
 /* eslint-disable sort-keys-fix/sort-keys-fix */
-import type { InputProps } from 'domain/models';
+import { type InputProps, InputType } from 'domain/models';
 
 const defaultProps = {
   value: '',
@@ -18,7 +18,7 @@ export const inputPropsSheet1: InputProps[] = [
     label: 'Id da planilha',
     formValue: 'spreadsheetId',
     placeholder: '',
-    type: 'text',
+    type: InputType.text,
     colSpan: true,
     ...defaultProps
   },
@@ -27,7 +27,7 @@ export const inputPropsSheet1: InputProps[] = [
     label: 'Nome da planilha',
     formValue: 'sheetName',
     placeholder: '',
-    type: 'text',
+    type: InputType.text,
     ...defaultProps
   },
   {
@@ -36,7 +36,7 @@ export const inputPropsSheet1: InputProps[] = [
     formValue: 'resultColumn',
     uppercase: true,
     placeholder: '',
-    type: 'text',
+    type: InputType.text,
     ...defaultProps
   },
   {
@@ -45,7 +45,7 @@ export const inputPropsSheet1: InputProps[] = [
     formValue: 'email',
     uppercase: true,
     placeholder: '',
-    type: 'text',
+    type: InputType.text,
     ...defaultProps
   },
   {
@@ -54,7 +54,7 @@ export const inputPropsSheet1: InputProps[] = [
     formValue: 'password',
     uppercase: true,
     placeholder: '',
-    type: 'text',
+    type: InputType.text,
     ...defaultProps
   },
   {
@@ -62,7 +62,7 @@ export const inputPropsSheet1: InputProps[] = [
     label: 'Linha para começar',
     formValue: 'startRow',
     placeholder: '',
-    type: 'number',
+    type: InputType.number,
     ...defaultProps
   },
   {
@@ -70,7 +70,7 @@ export const inputPropsSheet1: InputProps[] = [
     label: 'Linha para terminar',
     formValue: 'endRow',
     placeholder: '',
-    type: 'number',
+    type: InputType.number,
     ...defaultProps
   }
 ];

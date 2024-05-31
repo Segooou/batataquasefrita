@@ -48,7 +48,7 @@ export const DraggableFunctionality: FC = () => {
             >
               <span className={'text-center font-semibold line-clamp-3'}>{item.name}</span>
 
-              <span className={'min-w-max'}>
+              <span className={'text-center'}>
                 Plataforma: <span className={'font-semibold'}>{item.platform.name}</span>
               </span>
             </div>

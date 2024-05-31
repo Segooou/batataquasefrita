@@ -1,3 +1,4 @@
+import { FunctionalityModal } from 'presentation/atomic-component/molecule/modal';
 import { FunctionalityTableBody } from 'presentation/atomic-component/molecule/table/body';
 import { FunctionalityTableHeader } from 'presentation/atomic-component/molecule/table/header';
 import { Pagination } from 'presentation/atomic-component/molecule';
@@ -15,9 +16,9 @@ export const FunctionalityPanel: FC = () => {
     <div className={'flex flex-col'}>
       {functionalityQuery.data ? (
         <div className={'flex flex-col gap-6 max-w-[1300px] w-full mx-auto'}>
-          {/* <div className={'flex justify-end'}>
+          <div className={'flex justify-end'}>
             <FunctionalityModal />
-          </div> */}
+          </div>
 
           <TableTemplate
             tableBody={<FunctionalityTableBody items={functionalityQuery.data?.content ?? []} />}

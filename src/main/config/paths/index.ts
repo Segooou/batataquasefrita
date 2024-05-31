@@ -2,6 +2,7 @@
 export enum routePaths {
   login = '/',
   panel = '/painel',
+  functionalityTest = '/painel/teste-de-funcinalidade/:functionalityKeyword',
   home = '/plataforma',
   platform = '/plataforma/:platformKeyword',
   functionality = '/plataforma/:platformKeyword/:functionalityKeyword',
@@ -14,6 +15,8 @@ export const paths = {
   login: '/',
   home: '/plataforma',
   panel: '/painel',
+  functionalityTest: (functionalityKeyword: string): string =>
+    `/painel/teste-de-funcinalidade/${functionalityKeyword}`,
   platform: (platformKeyword: string): string => `/plataforma/${platformKeyword}`,
   functionality: (platformKeyword: string, functionalityKeyword: string): string =>
     `/plataforma/${platformKeyword}/${functionalityKeyword}`,
@@ -26,6 +29,7 @@ export const apiPaths = {
   default: '/default',
   auth: '/login',
   resetPassword: '/reset-password',
+  executeFunctionality: '/functionality/execute',
   platform: '/platform',
   action: '/action',
   user: '/user',

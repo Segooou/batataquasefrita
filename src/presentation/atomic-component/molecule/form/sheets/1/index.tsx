@@ -20,6 +20,8 @@ export interface DataProps {
     password: string;
   };
   result: string[];
+  hasError: boolean;
+  errorMessage?: string;
 }
 
 export const FunctionalitySheets1Form: FC<FunctionalityFormProps> = ({ functionality }) => {

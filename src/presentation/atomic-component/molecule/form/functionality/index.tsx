@@ -47,7 +47,7 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
   };
 
   return (
-    <div className={'flex flex-col gap-12 w-full '}>
+    <div className={'flex flex-col gap-12 w-full'}>
       <form
         className={'flex mx-auto flex-col w-full relative gap-4 max-w-[500px]'}
         onSubmit={onSubmit}

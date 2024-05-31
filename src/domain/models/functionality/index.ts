@@ -9,6 +9,18 @@ export interface Functionality {
   apiRoute: string;
   description: string | null;
   platform: Platform;
+  messageNotFound?: string;
+  from?: string;
+  regex?: string;
+  messageOnFind?: string;
+  subject?: string[];
+  text?: string[];
+  indexToGet?: number[];
+  textToReplace?: string[][];
+  active?: boolean;
+  _count: {
+    actions: number;
+  };
   inputProps: InputProps[];
   finishedAt: string | null;
   createdAt: string;

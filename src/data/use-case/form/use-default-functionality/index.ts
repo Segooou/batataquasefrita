@@ -1,10 +1,11 @@
 import { QueryName, apiPaths } from 'main/config';
 import { api } from 'infra/http';
-import { newFunctionalitySchema } from 'validation/schema';
+import { callToast, resolverError } from 'main/utils';
+import { defaultFunctionalitySchema } from 'validation/schema';
 import { queryClient } from 'infra/lib';
-import { resolverError } from 'main/utils';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import type { DefaultFunctionalityRequest } from 'validation/schema';
 import type {
   FieldErrors,
   SubmitHandler,
@@ -14,22 +15,21 @@ import type {
   UseFormSetValue
 } from 'react-hook-form';
 import type { Functionality } from 'domain/models';
-import type { NewFunctionalityRequest } from 'validation/schema';
 
 interface useDefaultFunctionalityProps {
-  closeModal: () => void;
+  closeModal?: () => void;
   functionality?: Functionality;
 }
 export const useDefaultFunctionality = ({
   closeModal,
   functionality
 }: useDefaultFunctionalityProps): {
-  errors: FieldErrors<NewFunctionalityRequest>;
-  register: UseFormRegister<NewFunctionalityRequest>;
-  onSubmit: SubmitHandler<NewFunctionalityRequest>;
-  handleSubmit: UseFormHandleSubmit<NewFunctionalityRequest>;
-  getValues: UseFormGetValues<NewFunctionalityRequest>;
-  setValue: UseFormSetValue<NewFunctionalityRequest>;
+  errors: FieldErrors<DefaultFunctionalityRequest>;
+  register: UseFormRegister<DefaultFunctionalityRequest>;
+  onSubmit: SubmitHandler<DefaultFunctionalityRequest>;
+  handleSubmit: UseFormHandleSubmit<DefaultFunctionalityRequest>;
+  getValues: UseFormGetValues<DefaultFunctionalityRequest>;
+  setValue: UseFormSetValue<DefaultFunctionalityRequest>;
   isSubmitting: boolean;
 } => {
   const {
@@ -39,11 +39,11 @@ export const useDefaultFunctionality = ({
     getValues,
 
     formState: { errors, isSubmitting }
-  } = useForm<NewFunctionalityRequest>({
-    resolver: yupResolver(newFunctionalitySchema)
+  } = useForm<DefaultFunctionalityRequest>({
+    resolver: yupResolver(defaultFunctionalitySchema)
   });
 
-  const onSubmit: SubmitHandler<NewFunctionalityRequest> = async (data) => {
+  const onSubmit: SubmitHandler<DefaultFunctionalityRequest> = async (data) => {
     try {
       if (functionality)
         await api.put({
@@ -57,8 +57,9 @@ export const useDefaultFunctionality = ({
           route: apiPaths.functionality
         });
 
-      closeModal();
+      if (closeModal) closeModal();
       queryClient.invalidateQueries(QueryName.functionality);
+      callToast.success('Atualizado com sucesso');
     } catch (error) {
       resolverError(error);
     }

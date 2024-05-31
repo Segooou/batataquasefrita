@@ -1,3 +1,10 @@
+export enum InputType {
+  text = 'text',
+  email = 'email',
+  number = 'number',
+  url = 'url'
+}
+
 export interface InputProps {
   id: number;
   colSpan?: boolean;
@@ -8,7 +15,7 @@ export interface InputProps {
   isRequired: boolean;
   formValue: string;
   error: boolean;
-  type: string;
+  type: InputType;
   mask: string | null;
   maskLength: number | null;
   finishedAt: Date | null;

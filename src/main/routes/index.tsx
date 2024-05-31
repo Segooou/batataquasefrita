@@ -2,6 +2,7 @@ import { AdminRoute, LoginRoute, PrivateRoute } from 'main/proxies';
 import {
   AuthContent,
   FunctionalityContent,
+  FunctionalityTestContent,
   HomeContent,
   PanelContent,
   PlatformContent,
@@ -37,6 +38,7 @@ const RouterConfig: FC = () => (
         <Route element={<AdminRoute />}>
           <Route element={<MainTemplate />}>
             <Route element={<PanelContent />} path={routePaths.panel} />
+            <Route element={<FunctionalityTestContent />} path={routePaths.functionalityTest} />
           </Route>
         </Route>
 

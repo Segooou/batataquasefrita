@@ -42,7 +42,7 @@ export const FunctionalityModal: FC<FunctionalityModalProps> = ({ functionality 
       size={'medium'}
       title={`${functionality ? 'Ediçao' : 'Cadastro'} de nova funcionalidade`}
     >
-      <DefaultFunctionalityForm closeModal={closeModal} functionality={functionality} />
+      <DefaultFunctionalityForm closeModal={closeModal} functionality={functionality} isModal />
     </Modal>
   );
 };
