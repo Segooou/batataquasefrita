@@ -16,7 +16,7 @@ interface LaptopSidebarProps {
 export const LaptopSidebar: FC<LaptopSidebarProps> = ({ headerIsBig }) => {
   const containerRef = useRef(null);
   const { open } = useAppSelector((state) => state.sidebar);
-  const { lastPathname, allPathname } = usePath();
+  const { lastPathname, allPathname, firstPathname } = usePath();
   const user = getUser();
 
   const platformQuery = useFindPlatformQuery({});
@@ -36,7 +36,7 @@ export const LaptopSidebar: FC<LaptopSidebarProps> = ({ headerIsBig }) => {
                 <div
                   className={`flex gap-4 items-center rounded-md ml-[-5px] pl-[5px] h-[40px] transition-[width] ease-in delay-75 ${
                     open ? 'w-full ' : 'w-[38px]'
-                  } ${lastPathname.startsWith('painel') ? 'bg-gray-700 text-white' : 'text-white hover:bg-[#4e4e4e67]'}`}
+                  } ${firstPathname.startsWith('/painel') ? 'bg-gray-700 text-white' : 'text-white hover:bg-[#4e4e4e67]'}`}
                 >
                   <Flight
                     name={'Painel'}
@@ -48,7 +48,7 @@ export const LaptopSidebar: FC<LaptopSidebarProps> = ({ headerIsBig }) => {
                   <span
                     className={`h-[1.5rem] font-semibold transition-[width] ease-in-out overflow-hidden cursor-pointer ${
                       open ? 'w-[200px]' : 'w-[0px]'
-                    } ${lastPathname.startsWith('painel') ? 'text-white' : 'text-white'}`}
+                    } ${firstPathname.startsWith('/painel') ? 'text-white' : 'text-white'}`}
                   >
                     Painel
                   </span>
