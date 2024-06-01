@@ -1,8 +1,8 @@
 import { type FC, useRef } from 'react';
-import { Flight } from '@mui/icons-material';
 import { IconRender } from 'presentation/atomic-component/atom';
 import { Link } from 'react-router-dom';
 import { Role } from 'domain/models';
+import { SupervisorAccountOutlined } from '@mui/icons-material';
 import { getUser } from 'store/persist/selector';
 import { paths } from 'main/config';
 import { useAppSelector } from 'store';
@@ -38,7 +38,7 @@ export const LaptopSidebar: FC<LaptopSidebarProps> = ({ headerIsBig }) => {
                     open ? 'w-full ' : 'w-[38px]'
                   } ${firstPathname.startsWith('/painel') ? 'bg-gray-700 text-white' : 'text-white hover:bg-[#4e4e4e67]'}`}
                 >
-                  <Flight
+                  <SupervisorAccountOutlined
                     name={'Painel'}
                     sx={{
                       fontSize: '1.65rem'

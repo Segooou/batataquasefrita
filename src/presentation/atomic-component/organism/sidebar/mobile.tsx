@@ -1,8 +1,8 @@
-import { Flight } from '@mui/icons-material';
 import { IconButton, Slide } from '@mui/material';
 import { IconRender } from 'presentation/atomic-component/atom';
 import { Link } from 'react-router-dom';
 import { Role } from 'domain/models';
+import { SupervisorAccountOutlined } from '@mui/icons-material';
 import { getUser } from 'store/persist/selector';
 import { paths } from 'main/config';
 import { setSidebar } from 'store/sidebar/slice';
@@ -15,7 +15,7 @@ import type { FC } from 'react';
 export const MobileSidebar: FC = () => {
   const dispatch = useDispatch();
   const sidebar = useSidebar();
-  const { lastPathname, allPathname } = usePath();
+  const { lastPathname, allPathname, firstPathname } = usePath();
 
   const user = getUser();
 
@@ -53,7 +53,7 @@ export const MobileSidebar: FC = () => {
                 >
                   <div
                     className={`flex gap-4 items-center rounded-md ml-[-5px] pl-[5px] h-[40px] ${
-                      lastPathname === 'panel' ? 'bg-gray-700 text-white' : ''
+                      firstPathname.startsWith('/painel') ? 'bg-gray-700 text-white' : ''
                     }`}
                   >
                     <IconButton
@@ -62,7 +62,7 @@ export const MobileSidebar: FC = () => {
                         padding: '1px'
                       }}
                     >
-                      <Flight
+                      <SupervisorAccountOutlined
                         name={'Painel'}
                         sx={{
                           fontSize: '1.95rem'
@@ -72,7 +72,7 @@ export const MobileSidebar: FC = () => {
 
                     <span
                       className={`h-[1.5rem] font-semibold overflow-hidden cursor-pointer ${
-                        lastPathname === 'panel' ? 'text-white' : 'text-white'
+                        firstPathname.startsWith('/painel') ? 'text-white' : 'text-white'
                       }`}
                     >
                       Painel
