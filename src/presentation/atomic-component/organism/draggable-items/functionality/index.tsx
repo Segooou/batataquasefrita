@@ -1,5 +1,9 @@
 import { DraggableContainer } from 'presentation/atomic-component/atom';
-import { dimensions, paths } from 'main/config';
+import { Favorite, FavoriteBorder } from '@mui/icons-material';
+import { QueryName, apiPaths, dimensions, paths } from 'main/config';
+import { api } from 'infra/http';
+import { queryClient } from 'infra/lib';
+import { resolverError } from 'main/utils';
 import { useFindFunctionalityQuery } from 'infra/cache';
 import { useNavigate } from 'react-router-dom';
 import { useWindowDimensions } from 'data/hooks';
@@ -13,6 +17,22 @@ export const DraggableFunctionality: FC = () => {
   const { width } = useWindowDimensions();
 
   const break2 = width < dimensions.tablet ? 3 : 8;
+
+  const changeFavorite = async (id: number, isFavorite: boolean): Promise<void> => {
+    try {
+      await api.put({
+        body: {
+          functionalityId: id,
+          isFavorite
+        },
+        route: apiPaths.favoriteUserFunctionality
+      });
+      queryClient.invalidateQueries(QueryName.functionality);
+      queryClient.invalidateQueries(QueryName.favoriteUserFunctionality);
+    } catch (error) {
+      resolverError(error);
+    }
+  };
 
   return (
     <div className={'flex flex-col gap-2'}>
@@ -31,21 +51,36 @@ export const DraggableFunctionality: FC = () => {
             <div
               key={item.id}
               className={
-                'min-w-[200px] flex-col gap-2 px-6 bg-gray-700 border border-gray-550 rounded-md h-[120px] bg-blue-500 flex items-center justify-center text-white'
+                'min-w-[200px] relative flex-col gap-2 px-6 bg-gray-700 border border-gray-550 rounded-md h-[120px] bg-blue-500 flex items-center justify-center text-white'
               }
               onClick={(event): void => {
-                const newTab = event?.ctrlKey || event?.metaKey || event?.button === 1;
+                const { tagName } = event.target as unknown as { tagName: string };
 
-                if (newTab) {
-                  const newWindow = window.open(
-                    paths.functionality(item.platform.keyword, item.keyword),
-                    '_blank'
-                  );
+                if (tagName === 'svg' || tagName === 'path')
+                  changeFavorite(item.id, item.favoriteUserFunctionality.length === 0);
+                else {
+                  const newTab = event?.ctrlKey || event?.metaKey || event?.button === 1;
 
-                  if (newWindow) newWindow.focus();
-                } else navigate(paths.functionality(item.platform.keyword, item.keyword));
+                  if (newTab) {
+                    const newWindow = window.open(
+                      paths.functionality(item.platform.keyword, item.keyword),
+                      '_blank'
+                    );
+
+                    if (newWindow) newWindow.focus();
+                  } else navigate(paths.functionality(item.platform.keyword, item.keyword));
+                }
               }}
             >
+              <div
+                className={'absolute top-1 right-1 z-10 cursor-pointer'}
+                onClick={(event): void => {
+                  event.stopPropagation();
+                }}
+              >
+                {item.favoriteUserFunctionality?.length > 0 ? <Favorite /> : <FavoriteBorder />}
+              </div>
+
               <span className={'text-center line-clamp-3'}>{item.name}</span>
 
               <span className={'text-center'}>

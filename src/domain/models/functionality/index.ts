@@ -21,6 +21,9 @@ export interface Functionality {
   _count: {
     actions: number;
   };
+  favoriteUserFunctionality: {
+    id: number;
+  }[];
   inputProps: InputProps[];
   finishedAt: string | null;
   createdAt: string;
@@ -29,4 +32,8 @@ export interface Functionality {
 
 export interface UseFindFunctionalityQuery extends Pagination {
   content: Functionality[];
+}
+
+export interface UseFindFavoriteFunctionalityQuery extends Pagination {
+  content: { functionality: Functionality }[];
 }

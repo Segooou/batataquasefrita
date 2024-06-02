@@ -1,4 +1,5 @@
 import {
+  DraggableFavoriteFunctionality,
   DraggableFunctionality,
   DraggableNewFunctionality,
   DraggablePlatform
@@ -7,7 +8,8 @@ import type { FC } from 'react';
 
 export const HomeContent: FC = () => {
   return (
-    <div className={'flex flex-col gap-8 tablet:gap-12'}>
+    <div className={'flex flex-col gap-8 tablet:gap-10'}>
+      <DraggableFavoriteFunctionality />
       <DraggablePlatform />
       <DraggableFunctionality />
       <DraggableNewFunctionality />

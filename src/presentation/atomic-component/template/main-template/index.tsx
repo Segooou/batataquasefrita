@@ -1,30 +1,18 @@
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useEffect } from 'react';
 import { Header, Sidebar } from 'presentation/atomic-component/organism';
 import { Outlet, useLocation } from 'react-router-dom';
+import { useAppSelector } from 'store';
 
 export const MainTemplate: FC = () => {
   const { pathname } = useLocation();
+
+  const { open } = useAppSelector((state) => state.sidebar);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  const [headerIsBig, setHeaderIsBig] = useState(true);
-
-  useEffect(() => {
-    const handleScroll = (): void => {
-      const currentScrollPos = window.scrollY;
-
-      if (currentScrollPos > 100) setHeaderIsBig(false);
-      else setHeaderIsBig(true);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [headerIsBig]);
+  const headerIsBig = true;
 
   return (
     <div className={'flex flex-col max-w-[100dvw] h-full min-h-dvh bg-black'} id={'main'}>
@@ -39,7 +27,12 @@ export const MainTemplate: FC = () => {
       >
         <Sidebar headerIsBig={headerIsBig} />
 
-        <div className={'flex flex-col overflow-auto w-full h-full text-white p-8'}>
+        <div
+          className={`flex flex-col overflow-auto w-full h-full text-white p-4 laptop:p-8 ${open ? 'laptop:ml-[280px]' : 'laptop:ml-[65px]'}`}
+          style={{
+            transition: 'all 200ms'
+          }}
+        >
           <Outlet />
         </div>
       </main>

@@ -23,7 +23,7 @@ export const LaptopSidebar: FC<LaptopSidebarProps> = ({ headerIsBig }) => {
 
   return (
     <div
-      className={`flex flex-col bg-gray-800 pl-1 justify-between gap-3 h-max border-r-2 border-gray-700 py-4 transition-[width] ease-in-out  ${
+      className={`flex flex-col fixed bg-gray-800 pl-1 justify-between gap-3 h-max border-r-2 border-gray-700 py-4 transition-[width] ease-in-out  ${
         open ? 'w-[280px]' : 'w-[65px]'
       } ${headerIsBig ? 'min-h-[calc(100dvh-94px)]' : 'min-h-[calc(100dvh-65px)]'}`}
       ref={containerRef}
