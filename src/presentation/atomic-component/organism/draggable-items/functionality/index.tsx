@@ -1,36 +1,42 @@
 import { DraggableContainer } from 'presentation/atomic-component/atom';
+import { type FC, useState } from 'react';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { QueryName, apiPaths, dimensions, paths } from 'main/config';
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib';
-import { resolverError } from 'main/utils';
+import { random, resolverError } from 'main/utils';
 import { useFindFunctionalityQuery } from 'infra/cache';
 import { useNavigate } from 'react-router-dom';
 import { useWindowDimensions } from 'data/hooks';
-import type { FC } from 'react';
 
 export const DraggableFunctionality: FC = () => {
   const functionalityQuery = useFindFunctionalityQuery({});
 
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState(false);
   const { width } = useWindowDimensions();
 
   const break2 = width < dimensions.tablet ? 3 : 8;
 
   const changeFavorite = async (id: number, isFavorite: boolean): Promise<void> => {
     try {
-      await api.put({
-        body: {
-          functionalityId: id,
-          isFavorite
-        },
-        route: apiPaths.favoriteUserFunctionality
-      });
-      queryClient.invalidateQueries(QueryName.functionality);
-      queryClient.invalidateQueries(QueryName.favoriteUserFunctionality);
+      if (isLoading === false) {
+        setIsLoading(true);
+        await api.put({
+          body: {
+            functionalityId: id,
+            isFavorite
+          },
+          route: apiPaths.favoriteUserFunctionality
+        });
+        queryClient.invalidateQueries(QueryName.functionality);
+        queryClient.invalidateQueries(QueryName.favoriteUserFunctionality);
+      }
     } catch (error) {
       resolverError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -49,7 +55,7 @@ export const DraggableFunctionality: FC = () => {
         {functionalityQuery.data?.content.map((item) => {
           return (
             <div
-              key={item.id}
+              key={`${random()}${item.id}`}
               className={
                 'min-w-[200px] relative flex-col gap-2 px-6 bg-gray-700 border border-gray-550 rounded-md h-[120px] bg-blue-500 flex items-center justify-center text-white'
               }

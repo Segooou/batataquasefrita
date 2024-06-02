@@ -1,5 +1,6 @@
 import { DraggableContainer } from 'presentation/atomic-component/atom';
 import { dimensions, paths } from 'main/config';
+import { random } from 'main/utils';
 import { useFindFavoriteFunctionalityQuery } from 'infra/cache';
 import { useNavigate } from 'react-router-dom';
 import { useWindowDimensions } from 'data/hooks';
@@ -31,7 +32,7 @@ export const DraggableFavoriteFunctionality: FC = () => {
         {functionalityQuery.data?.content.map(({ functionality: item }) => {
           return (
             <div
-              key={item.id}
+              key={`${random()}${item.id}`}
               className={
                 'min-w-[200px] flex-col gap-2 px-6 bg-gray-700 border border-gray-550 rounded-md h-[120px] bg-blue-500 flex items-center justify-center text-white'
               }
