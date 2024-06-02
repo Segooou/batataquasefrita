@@ -46,10 +46,10 @@ export const DraggableFunctionality: FC = () => {
                 } else navigate(paths.functionality(item.platform.keyword, item.keyword));
               }}
             >
-              <span className={'text-center font-semibold line-clamp-3'}>{item.name}</span>
+              <span className={'text-center line-clamp-3'}>{item.name}</span>
 
               <span className={'text-center'}>
-                Plataforma: <span className={'font-semibold'}>{item.platform.name}</span>
+                <span className={'font-semibold'}>{item.platform.name}</span>
               </span>
             </div>
           );

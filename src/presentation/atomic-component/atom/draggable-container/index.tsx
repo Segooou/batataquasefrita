@@ -16,6 +16,7 @@ export const DraggableContainer: FC<DraggableContainerProps> = ({ children, heig
   const [isClick, setIsClick] = useState(true);
 
   const handleMouseDown = (event: MouseEvent<HTMLDivElement>): void => {
+    event.preventDefault();
     if (event.buttons === 2) event.preventDefault();
     else {
       if (event.buttons === 4) event.preventDefault();
