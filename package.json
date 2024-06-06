@@ -2,6 +2,7 @@
   "name": "batata-quase-frita",
   "version": "1.0.0",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "vite --host",
     "build": "tsc && vite build",
