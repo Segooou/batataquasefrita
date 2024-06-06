@@ -14,6 +14,7 @@ export interface InputProps {
   placeholder: string;
   isRequired: boolean;
   formValue: string;
+  options?: { id: string; name: string }[];
   error: boolean;
   type: InputType;
   mask: string | null;

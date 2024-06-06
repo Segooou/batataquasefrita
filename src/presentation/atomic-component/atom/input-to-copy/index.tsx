@@ -23,6 +23,25 @@ export const InputToCopy: FC<InputToCopyProps> = ({ value, label, max = 4, numbe
     }
   };
 
+  const download = async (): Promise<void> => {
+    try {
+      const response = await fetch(value);
+      const blob = await response.blob();
+
+      const link = document.createElement('a');
+
+      link.href = URL.createObjectURL(blob);
+      link.download = 'image.jpeg';
+      document.body.appendChild(link);
+
+      link.click();
+
+      document.body.removeChild(link);
+    } catch {
+      callToast.error('Erro ao baixar imagem');
+    }
+  };
+
   return (
     <>
       <LabelInput
@@ -34,8 +53,9 @@ export const InputToCopy: FC<InputToCopyProps> = ({ value, label, max = 4, numbe
         value={value}
       />
 
-      <div className={'flex items-center'}>
+      <div className={'flex flex-col gap-3 justify-center items-center'}>
         <Button onClick={copyToClipboard}>Copiar</Button>
+        {value?.endsWith('.jpeg') ? <Button onClick={download}>Baixar</Button> : null}
       </div>
     </>
   );

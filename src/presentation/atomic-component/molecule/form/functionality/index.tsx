@@ -1,4 +1,5 @@
 import { Button } from '@mui/material';
+import { CheckboxData } from 'presentation/atomic-component/molecule/checkbox-data';
 import { FormButton, InputToCopy } from 'presentation/atomic-component/atom';
 import { InputData } from 'presentation/atomic-component/molecule/input-data';
 import { api } from 'infra/http';
@@ -52,16 +53,29 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
         className={'flex mx-auto flex-col w-full relative gap-4 max-w-[500px]'}
         onSubmit={onSubmit}
       >
-        {data.map((item, index) => (
-          <InputData
-            key={item.id}
-            data={data}
-            index={index}
-            inputData={item}
-            setData={setData}
-            validateForm={validateForm}
-          />
-        ))}
+        {data.map((item, index) => {
+          if (item?.options && item?.options?.length > 0)
+            return (
+              <CheckboxData
+                key={item.id}
+                data={data}
+                index={index}
+                inputData={item}
+                setData={setData}
+              />
+            );
+
+          return (
+            <InputData
+              key={item.id}
+              data={data}
+              index={index}
+              inputData={item}
+              setData={setData}
+              validateForm={validateForm}
+            />
+          );
+        })}
 
         <FormButton isSubmitting={isSubmitting} label={'Enviar'} />
       </form>
@@ -78,7 +92,7 @@ export const FunctionalityForm: FC<FunctionalityFormProps> = ({ functionality })
               {item?.result?.map((itemResult, index) => (
                 <div
                   key={itemResult}
-                  className={`flex gap-4 max-w-[500px] mx-auto ${index + 1 === item.result?.length && index % 2 === 0 ? 'col-span-2' : ''}`}
+                  className={`flex gap-4 max-w-[700px] mx-auto ${itemResult?.endsWith('.jpeg') ? 'tablet:w-[500px] col-span-2' : ''} ${index + 1 === item.result?.length && index % 2 === 0 ? 'col-span-2' : ''}`}
                 >
                   <InputToCopy label={'Resultado'} value={itemResult} />
                 </div>

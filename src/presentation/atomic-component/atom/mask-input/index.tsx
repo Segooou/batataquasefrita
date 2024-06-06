@@ -1,6 +1,7 @@
-import { type ChangeEventHandler, type FC, useEffect } from 'react';
 import { TextField } from '@mui/material';
+import { useEffect } from 'react';
 import { useIMask } from 'react-imask';
+import type { ChangeEvent, ChangeEventHandler, FC } from 'react';
 import type { TextFieldProps } from '@mui/material';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 
@@ -21,6 +22,11 @@ export const MaskInput: FC<MaskInputProps> = ({ mask, register, value, ...props 
     maskRef.setValue(value ?? '');
   }, [value]);
 
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    if (props.onChange) props.onChange(event);
+    else if (register?.onChange) register.onChange(event);
+  };
+
   return (
     <TextField
       {...props}
@@ -31,6 +37,7 @@ export const MaskInput: FC<MaskInputProps> = ({ mask, register, value, ...props 
         if (register?.onBlur) register.onBlur(event);
       }}
       onFocus={props.onFocus}
+      onInput={handleInputChange}
       ref={register?.ref}
       type={'tel'}
     />
