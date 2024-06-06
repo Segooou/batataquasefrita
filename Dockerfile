@@ -6,7 +6,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY package.json /app/package.json
 
-RUN npm install --silent
+RUN npm install --omit=dev
 
 COPY . /app
 RUN npm run build
