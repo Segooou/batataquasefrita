@@ -3,6 +3,7 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import { type FC, useEffect } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
@@ -11,10 +12,13 @@ import { ptBR } from 'date-fns/locale';
 import { queryClient } from 'infra/lib';
 import { useWindowDimensions } from 'data/hooks';
 import Router from './routes';
-import type { FC } from 'react';
 
 const App: FC = () => {
   const { width } = useWindowDimensions();
+
+  useEffect(() => {
+    window.location.href = 'https://batataquasefritada.azurewebsites.net/';
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
