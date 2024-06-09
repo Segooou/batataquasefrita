@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { type FC, useEffect, useState } from 'react';
 import {
@@ -6,6 +7,7 @@ import {
   ListInput,
   ListListInput
 } from 'presentation/atomic-component/atom';
+import { ImageFunctionalityForm } from 'presentation/atomic-component/molecule/image-functionality-form';
 import { Select, type SelectValues } from 'presentation/atomic-component/atom/select';
 import { listToSelect, validate } from 'main/utils';
 import { useDefaultFunctionality } from 'data/use-case';
@@ -23,6 +25,8 @@ export const DefaultFunctionalityForm: FC<DefaultFunctionalityFormProps> = ({
   functionality,
   isModal
 }) => {
+  const isImage = functionality?.apiRoute.startsWith('/image/');
+
   const [platformSelected, setPlatformSelected] = useState<SelectValues | null>(null);
 
   const { handleSubmit, onSubmit, register, errors, isSubmitting, getValues, setValue } =
@@ -64,7 +68,13 @@ export const DefaultFunctionalityForm: FC<DefaultFunctionalityFormProps> = ({
   }, [functionality]);
 
   return (
-    <form className={'flex flex-col gap-4 w-full'} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={'flex flex-col gap-4 w-full'}
+      onSubmit={handleSubmit(onSubmit)}
+      style={{
+        minWidth: isImage ? '65%' : ''
+      }}
+    >
       <div className={'flex gap-4'}>
         <LabelInput
           error={!!errors.name}
@@ -115,7 +125,9 @@ export const DefaultFunctionalityForm: FC<DefaultFunctionalityFormProps> = ({
         )}
       </div>
 
-      {isModal ? null : (
+      {isModal ? null : isImage && functionality ? (
+        <ImageFunctionalityForm functionality={functionality} />
+      ) : (
         <>
           <div className={'flex gap-4'}>
             <LabelInput
@@ -187,6 +199,7 @@ export const DefaultFunctionalityForm: FC<DefaultFunctionalityFormProps> = ({
         </>
       )}
 
+      {isImage ? null : <FormButton disableRipple isSubmitting={isSubmitting} label={'Salvar'} />}
       <FormButton disableRipple isSubmitting={isSubmitting} label={'Salvar'} />
     </form>
   );

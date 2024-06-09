@@ -1,3 +1,4 @@
+import { canvasImageReducer } from './canvas-image/slice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import { persistReducer as persistedReducer } from './persist/slice';
@@ -16,6 +17,7 @@ const persistConfig = {
 const persisted = persistReducer(persistConfig, persistedReducer);
 
 const rootReducer = combineReducers({
+  canvasImage: canvasImageReducer,
   persist: persisted,
   redirect: redirectReducer,
   sidebar: sidebarReducer

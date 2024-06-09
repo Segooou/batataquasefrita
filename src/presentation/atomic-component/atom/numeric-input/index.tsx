@@ -9,7 +9,7 @@ import type { UseFormRegisterReturn } from 'react-hook-form';
 
 type NumericInputProps = Pick<
   TextFieldProps,
-  'error' | 'onBlur' | 'onFocus' | 'placeholder' | 'required'
+  'error' | 'label' | 'onBlur' | 'onFocus' | 'placeholder' | 'required'
 > & {
   type?: 'monetary' | 'percentage' | 'time';
   register?: UseFormRegisterReturn;

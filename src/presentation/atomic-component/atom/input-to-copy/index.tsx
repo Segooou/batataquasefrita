@@ -1,6 +1,7 @@
 import { Button } from '@mui/material';
 import { type FC, useRef } from 'react';
 import { LabelInput } from 'presentation/atomic-component/atom/label-input';
+import { Link } from 'react-router-dom';
 import { callToast } from 'main/utils';
 
 interface InputToCopyProps {
@@ -56,6 +57,12 @@ export const InputToCopy: FC<InputToCopyProps> = ({ value, label, max = 4, numbe
       <div className={'flex flex-col gap-3 justify-center items-center'}>
         <Button onClick={copyToClipboard}>Copiar</Button>
         {value?.endsWith('.jpeg') ? <Button onClick={download}>Baixar</Button> : null}
+
+        {value?.endsWith('.jpeg') ? (
+          <Link target={'_blank'} to={value}>
+            <Button>Abrir</Button>
+          </Link>
+        ) : null}
       </div>
     </>
   );

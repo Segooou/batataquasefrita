@@ -3,6 +3,7 @@ export type QueryList =
   | 'default'
   | 'favoriteUserFunctionality'
   | 'functionality'
+  | 'functionalityImage'
   | 'newFunctionality'
   | 'platform'
   | 'user';
@@ -12,6 +13,7 @@ export enum QueryName {
   default = 'default',
   favoriteUserFunctionality = 'favoriteUserFunctionality',
   functionality = 'functionality',
+  functionalityImage = 'functionalityImage',
   user = 'user',
   newFunctionality = 'newFunctionality',
   platform = 'platform'

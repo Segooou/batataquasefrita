@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/init-declarations */
 import { Button } from '@mui/material';
 import { FormButton, InputToCopy } from 'presentation/atomic-component/atom';
@@ -130,13 +131,15 @@ export const FunctionalityPreviewForm: FC<FunctionalityPreviewFormProps> = ({ fu
   };
 
   return (
-    <div className={'flex flex-col gap-12 w-full'}>
+    <div className={'flex flex-col gap-4 w-full'}>
+      <div className={'flex mx-auto flex-col w-full relative gap-4 max-w-[500px]'}>
+        <Button onClick={check}>Checar dados</Button>
+      </div>
+
       <form
         className={'flex mx-auto flex-col w-full relative gap-4 max-w-[500px]'}
         onSubmit={onSubmit}
       >
-        <Button onClick={check}>Checar dados</Button>
-
         {data.map((item, index) => (
           <InputData
             key={item.id}

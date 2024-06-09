@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { OpenInNew } from '@mui/icons-material';
 import { QueryName, apiPaths, paths } from 'main/config';
 import { TableBody, TableRow } from '@mui/material';
+import { setCanvasImage } from 'store/canvas-image/slice';
+import { useDispatch } from 'react-redux';
 import type { FC } from 'react';
 import type { Functionality } from 'domain/models';
 
@@ -12,6 +14,8 @@ interface FunctionalityTableBodyProps {
 }
 
 export const FunctionalityTableBody: FC<FunctionalityTableBodyProps> = ({ items }) => {
+  const dispatch = useDispatch();
+
   return (
     <TableBody className={'relative'}>
       {items?.length === 0 ? (
@@ -52,6 +56,9 @@ export const FunctionalityTableBody: FC<FunctionalityTableBodyProps> = ({ items 
                     className={
                       'bg-gray-700 hover:bg-gray-550 border border-gray-500 rounded-md p-2 cursor-pointer'
                     }
+                    onClick={(): void => {
+                      dispatch(setCanvasImage({ inputOnImage: [], itemSelected: null, url: null }));
+                    }}
                   >
                     <OpenInNew />
                   </div>
