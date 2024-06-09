@@ -1,7 +1,6 @@
 import { Button } from '@mui/material';
 import { type FC, useRef } from 'react';
 import { LabelInput } from 'presentation/atomic-component/atom/label-input';
-import { Link } from 'react-router-dom';
 import { callToast } from 'main/utils';
 
 interface InputToCopyProps {
@@ -43,25 +42,39 @@ export const InputToCopy: FC<InputToCopyProps> = ({ value, label, max = 4, numbe
     }
   };
 
+  const getRows = (): number => {
+    if (value?.endsWith('.jpeg')) return 5;
+    return value?.length > number ? max : 1;
+  };
+
   return (
     <>
       <LabelInput
         inputRef={inputRef}
         label={label}
-        maxRows={value?.length > number ? max : 1}
-        minRows={value?.length > number ? max : 1}
+        maxRows={getRows()}
+        minRows={getRows()}
         textarea={value?.length > number}
         value={value}
       />
 
       <div className={'flex flex-col gap-3 justify-center items-center'}>
-        <Button onClick={copyToClipboard}>Copiar</Button>
-        {value?.endsWith('.jpeg') ? <Button onClick={download}>Baixar</Button> : null}
+        <Button className={'w-full'} onClick={copyToClipboard}>
+          Copiar
+        </Button>
 
         {value?.endsWith('.jpeg') ? (
-          <Link target={'_blank'} to={value}>
-            <Button>Abrir</Button>
-          </Link>
+          <Button className={'w-full'} onClick={download}>
+            Baixar
+          </Button>
+        ) : null}
+
+        {value?.endsWith('.jpeg') ? (
+          <Button className={'w-full'}>
+            <a href={value} rel={'noreferrer'} target={'_blank'}>
+              Abrir
+            </a>
+          </Button>
         ) : null}
       </div>
     </>
