@@ -200,7 +200,6 @@ export const DefaultFunctionalityForm: FC<DefaultFunctionalityFormProps> = ({
       )}
 
       {isImage ? null : <FormButton disableRipple isSubmitting={isSubmitting} label={'Salvar'} />}
-      <FormButton disableRipple isSubmitting={isSubmitting} label={'Salvar'} />
     </form>
   );
 };

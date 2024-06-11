@@ -1,11 +1,13 @@
 import { Add } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { ImageFunctionality } from 'presentation/atomic-component/molecule/image-functionality';
+import { Pagination } from 'presentation/atomic-component/molecule/pagination';
 import { QueryName, apiPaths } from 'main/config';
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib';
 import { resolverError } from 'main/utils';
 import { useFindFunctionalityImageQuery } from 'infra/cache';
+import { usePagination } from 'data/hooks';
 import type { FC } from 'react';
 import type { Functionality } from 'domain/models';
 
@@ -14,7 +16,11 @@ interface ImageFunctionalityFormProps {
 }
 
 export const ImageFunctionalityForm: FC<ImageFunctionalityFormProps> = ({ functionality }) => {
+  const { handleChangePage, page } = usePagination();
+
   const functionalityImageQuery = useFindFunctionalityImageQuery({
+    limit: 5,
+    page,
     params: {
       functionalityId: functionality.id
     }
@@ -48,6 +54,14 @@ export const ImageFunctionalityForm: FC<ImageFunctionalityFormProps> = ({ functi
       {functionalityImageQuery.data?.content.map((item) => (
         <ImageFunctionality key={item.id} functionalityImage={item} />
       ))}
+
+      <div>
+        <Pagination
+          handleChangePage={handleChangePage}
+          page={page}
+          totalPages={functionalityImageQuery.data?.totalPages}
+        />
+      </div>
     </div>
   );
 };

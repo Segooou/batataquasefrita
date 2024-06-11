@@ -164,7 +164,7 @@ export const frontCnh: InputOnImageProps[] = [
     rotate: 1,
     text: '',
     top: 783,
-    value: 'personImage',
+    value: 'gender',
     width: 170
   },
   {
