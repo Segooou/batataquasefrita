@@ -33,10 +33,10 @@ export const InputsOfImageData: FC<InputsOfImageDataProps> = ({
   const { itemSelected: itemSelected2 } = useAppSelector((state) => state.canvasImage);
 
   const [selectedFont, setSelectedFont] = useState<SelectValues | null>(
-    inputOnImage.font === 'Times New Roman Cyr'
+    inputOnImage.font
       ? {
-          label: 'Times New Roman Cyr',
-          value: 'Times New Roman Cyr'
+          label: inputOnImage.font,
+          value: inputOnImage.font
         }
       : {
           label: 'Arial',
@@ -106,6 +106,7 @@ export const InputsOfImageData: FC<InputsOfImageDataProps> = ({
               const selectValue = event as SelectValues | null;
 
               setSelectedFont(selectValue);
+              setInputOnImageData({ ...inputOnImageData, font: selectValue?.value ?? 'Arial' });
             }}
             options={[
               {
@@ -115,6 +116,10 @@ export const InputsOfImageData: FC<InputsOfImageDataProps> = ({
               {
                 label: 'Times New Roman Cyr',
                 value: 'Times New Roman Cyr'
+              },
+              {
+                label: 'Homemade Apple',
+                value: 'Homemade Apple'
               }
             ]}
             value={selectedFont}

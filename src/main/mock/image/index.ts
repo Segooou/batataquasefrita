@@ -168,15 +168,16 @@ export const frontCnh: InputOnImageProps[] = [
     width: 170
   },
   {
-    color: '',
-    folder: 'assinatura',
-    height: 64,
-    left: 320,
+    color: 'black',
+    font: 'Homemade Apple',
+    height: 0,
+    left: 335,
     rotate: 1,
-    text: '',
-    top: 1045,
-    value: 'personImage',
-    width: 180
+    size: '26',
+    text: 'Gabriel de Oliveira',
+    top: 1080,
+    value: 'assinatura',
+    width: 0
   }
 ];
 

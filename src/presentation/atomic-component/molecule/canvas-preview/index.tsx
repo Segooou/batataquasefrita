@@ -61,7 +61,6 @@ export const CanvasPreview: FC<CanvasPreviewProps> = ({ inputOnImage, url }) => 
 
                   ctx.drawImage(img, item.left, item.top, item.width, item.height);
                 };
-                console.log(item?.text?.length);
 
                 img.src = item?.text?.length > 0 ? item.text : getImage(item.folder);
               } else {
@@ -78,7 +77,12 @@ export const CanvasPreview: FC<CanvasPreviewProps> = ({ inputOnImage, url }) => 
 
                 ctx.translate(item.left, item.top + 10);
                 ctx.rotate(angle);
-                ctx.fillText(String(item.text ?? ' ').toUpperCase(), 0, 0);
+                const text =
+                  item.value === 'assinatura'
+                    ? String(item.text ?? ' ')
+                    : String(item.text ?? ' ').toUpperCase();
+
+                ctx.fillText(text, 0, 0);
                 ctx.rotate(-angle);
                 ctx.translate(-item.left, -(item.top + 10));
               }

@@ -3,6 +3,7 @@ import { Button } from '@mui/material';
 import { ImageFunctionality } from 'presentation/atomic-component/molecule/image-functionality';
 import { Pagination } from 'presentation/atomic-component/molecule/pagination';
 import { QueryName, apiPaths } from 'main/config';
+import { UploadImageModal } from 'presentation/atomic-component/molecule/modal/upload-image';
 import { api } from 'infra/http';
 import { queryClient } from 'infra/lib';
 import { resolverError } from 'main/utils';
@@ -28,6 +29,10 @@ export const ImageFunctionalityForm: FC<ImageFunctionalityFormProps> = ({ functi
 
   return (
     <div className={'flex flex-col gap-6 my-4'}>
+      <div>
+        <UploadImageModal />
+      </div>
+
       <div className={'flex gap-2 items-center justify-center '}>
         <h2>Variantes de imagens</h2>
 

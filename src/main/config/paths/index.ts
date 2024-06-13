@@ -36,6 +36,7 @@ export const apiPaths = {
   favoriteUserFunctionality: '/favorite-user-functionality',
   functionality: '/functionality',
   functionalityImage: '/functionality-image',
+  uploadImages: '/image/upload',
   newFunctionality: '/new-functionality',
   email: 'email'
 };
