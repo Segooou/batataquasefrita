@@ -38,5 +38,6 @@ export const apiPaths = {
   functionalityImage: '/functionality-image',
   uploadImages: '/image/upload',
   newFunctionality: '/new-functionality',
+  userFunctionality: '/user-functionalities',
   email: 'email'
 };

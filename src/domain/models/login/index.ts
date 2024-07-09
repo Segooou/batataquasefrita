@@ -10,9 +10,20 @@ export interface UserProps {
   username: string;
   role: Role;
   avatar: string | null;
+  userSeeFunctionality: { functionalityId: number }[];
   _count: {
     actions: number;
   };
+}
+
+export interface UserFunctionalities {
+  functionalityId: number;
+  userId: number;
+}
+
+export interface UserPlatforms {
+  platformId: number;
+  userId: number;
 }
 
 export interface UseFindUserQuery extends Pagination {

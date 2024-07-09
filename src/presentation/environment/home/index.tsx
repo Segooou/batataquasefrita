@@ -1,7 +1,6 @@
 import {
   DraggableFavoriteFunctionality,
   DraggableFunctionality,
-  DraggableNewFunctionality,
   DraggablePlatform
 } from 'presentation/atomic-component/organism';
 import type { FC } from 'react';
@@ -12,7 +11,6 @@ export const HomeContent: FC = () => {
       <DraggableFavoriteFunctionality />
       <DraggablePlatform />
       <DraggableFunctionality />
-      <DraggableNewFunctionality />
     </div>
   );
 };

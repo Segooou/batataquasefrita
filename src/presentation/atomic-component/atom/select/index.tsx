@@ -22,6 +22,7 @@ interface SelectProps {
   required?: boolean;
   register?: UseFormRegisterReturn;
   isHideClearButton?: boolean;
+  tagsMaxHeight?: number | string;
   label?: string;
   placeholder?: string;
   isLoading?: boolean;
@@ -95,7 +96,9 @@ export const Select: FC<SelectProps> = ({ isMultiple, options, register, value, 
         openText={'Abrir'}
         options={options}
         renderInput={({ InputProps, ...params }): ReactNode => {
-          const { startAdornment, ...rest } = InputProps as any;
+          const { startAdornment, ...rest } = InputProps;
+
+          const hasItems = startAdornment as { props: { children: [] } };
 
           return (
             <>
@@ -123,8 +126,15 @@ export const Select: FC<SelectProps> = ({ isMultiple, options, register, value, 
                 ref={register?.ref}
               />
 
-              {isMultiple ? (
-                <TextField InputProps={{ startAdornment }} color={'hide'} variant={'filled'} />
+              {isMultiple && hasItems?.props?.children?.length > 0 ? (
+                <TextField
+                  InputProps={{ startAdornment }}
+                  color={'hide'}
+                  sx={{
+                    width: '100%'
+                  }}
+                  variant={'filled'}
+                />
               ) : null}
             </>
           );
@@ -142,7 +152,12 @@ export const Select: FC<SelectProps> = ({ isMultiple, options, register, value, 
           </li>
         )}
         renderTags={(params, getTagProps): ReactNode => (
-          <div className={'max-h-[90px] overflow-auto'}>
+          <div
+            className={'overflow-auto'}
+            style={{
+              maxHeight: props.tagsMaxHeight ?? '90px'
+            }}
+          >
             {params.map((option, index) => {
               const customOption = option as SelectValues;
 
