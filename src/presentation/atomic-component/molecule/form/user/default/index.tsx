@@ -2,11 +2,12 @@
 import { Avatar } from '@mui/material';
 import { type FC, useEffect } from 'react';
 import { FormButton, LabelInput } from 'presentation/atomic-component/atom';
+import { type Functionality, Role, type UserProps } from 'domain/models';
 // eslint-disable-next-line @typescript-eslint/no-restricted-imports
 import { UserFunctionalitiesFrom } from '../user-functionalities';
+import { getUser } from 'store/persist/selector';
 import { useUser } from 'data/use-case';
 import { validate } from 'main/utils';
-import type { Functionality, UserProps } from 'domain/models';
 import type { SelectValues } from 'presentation/atomic-component/atom/select';
 
 interface UserFromProps {
@@ -20,6 +21,8 @@ export const UserFrom: FC<UserFromProps> = ({ closeModal, user, functionality })
     closeModal,
     user
   });
+
+  const loggedUser = getUser();
 
   const startUserFunctionalities: SelectValues[] = user?.userSeeFunctionality
     ? user?.userSeeFunctionality?.map((item) => {
@@ -84,7 +87,7 @@ export const UserFrom: FC<UserFromProps> = ({ closeModal, user, functionality })
         <FormButton disableRipple isSubmitting={isSubmitting} label={'Enviar'} />
       </form>
 
-      {user ? (
+      {user && loggedUser.role === Role.admin ? (
         <UserFunctionalitiesFrom
           functionality={functionality}
           startUserFunctionalities={startUserFunctionalities}
